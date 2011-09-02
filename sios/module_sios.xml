@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_sios" default="compile.module.sios">
+  <dirname property="module.sios.basedir" file="${ant.file.module_sios}"/>
+  
+  <property name="module.jdk.home.sios" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.sios" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.sios" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.sios" value="${compiler.args}"/>
+  
+  <property name="sios.output.dir" value="${module.sios.basedir}/out/production/Sios"/>
+  <property name="sios.testoutput.dir" value="${module.sios.basedir}/out/test/Sios"/>
+  
+  <path id="sios.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="sios.module.classpath">
+    <path refid="${module.jdk.classpath.sios}"/>
+    <path refid="library.jtatto.classpath"/>
+  </path>
+  
+  <path id="sios.runtime.module.classpath">
+    <pathelement location="${sios.output.dir}"/>
+    <pathelement location="${sios.testoutput.dir}"/>
+    <path refid="library.jtatto.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.sios">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.sios">
+    <patternset refid="excluded.from.module.sios"/>
+  </patternset>
+  
+  <path id="sios.module.sourcepath">
+    <dirset dir="${module.sios.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.sios" depends="compile.module.sios.production,compile.module.sios.tests" description="Compile module Sios"/>
+  
+  <target name="compile.module.sios.production" description="Compile module Sios; production classes">
+    <mkdir dir="${sios.output.dir}"/>
+    <javac2 destdir="${sios.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.sios}/javac">
+      <compilerarg line="${compiler.args.sios}"/>
+      <bootclasspath refid="sios.module.bootclasspath"/>
+      <classpath refid="sios.module.classpath"/>
+      <src refid="sios.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.sios"/>
+    </javac2>
+    
+    <copy todir="${sios.output.dir}">
+      <fileset dir="${module.sios.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.sios.tests" depends="compile.module.sios.production" description="compile module Sios; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.sios" description="cleanup module">
+    <delete dir="${sios.output.dir}"/>
+    <delete dir="${sios.testoutput.dir}"/>
+  </target>
+</project>
