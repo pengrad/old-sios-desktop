@@ -8,12 +8,15 @@ import model.tree.Options;
 import model.tree.gui.gradient.RoundGradientPaint;
 import model.tree.model.Node;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ReplicateScaleFilter;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +34,9 @@ public class MyTreeNode extends Node {
     private Object information = null;
     private JLabel label = new JLabel();
     private Shape s;
+    BufferedImage coordinatorBi;
+    BufferedImage managerBi;
+    BufferedImage ingenerBi;
 
 
     public void setType(int type) {
@@ -53,6 +59,15 @@ public class MyTreeNode extends Node {
         label.setFont(new Font("Verdana", Font.BOLD, 14));
         add(label);
         s = new Rectangle2D.Double(0, 0, MyTree.widthNode, MyTree.heightNode);
+        BufferedImage bi = null;
+        try {
+            coordinatorBi = setResize(ImageIO.read(this.getClass().getResource("/model/tree/image/c.jpg")), (int) shape.getBounds().getWidth(), (int) shape.getBounds().getHeight());
+            managerBi = setResize(ImageIO.read(this.getClass().getResource("/model/tree/image/m.jpg")), (int) shape.getBounds().getWidth(), (int) shape.getBounds().getHeight());
+            ingenerBi = setResize(ImageIO.read(this.getClass().getResource("/model/tree/image/e.jpg")), (int) shape.getBounds().getWidth(), (int) shape.getBounds().getHeight());
+
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     private void setToolTip() {
@@ -93,33 +108,46 @@ public class MyTreeNode extends Node {
     @Override
     public void paintNode(Graphics2D g) {
         Options opt = Options.get();
-        Color color = Color.WHITE;
+        Color color = Color.BLUE;
         if (information != null) {
             Executor executor = (Executor) information;
-            color = Color.GRAY; //ColorGenerator.makeColor(ingener.getSpec());
+            //Сектор забрузки
+//            color = Color.GRAY; //ColorGenerator.makeColor(ingener.getSpec());
             g.setColor(color);
-            int t = (int) (((double) executor.getSumTime() / ManagerInitTree.getInstance().getTreeModelManager().getMaxTime()) * 360);
-            Shape s = new Arc2D.Double(new Rectangle2D.Double(shape.getBounds2D().getX() - 3, shape.getBounds2D().getY() - 3, shape.getBounds2D().getWidth() + 6, shape.getBounds2D().getHeight() + 6), 90, -t, Arc2D.PIE);
-            g.fill(s);
+//            int t = (int) (((double) executor.getSumTime() / ManagerInitTree.getInstance().getTreeModelManager().getMaxTime()) * 360);
+//            Shape s = new Arc2D.Double(new Rectangle2D.Double(shape.getBounds2D().getX() - 3, shape.getBounds2D().getY() - 3, shape.getBounds2D().getWidth() + 6, shape.getBounds2D().getHeight() + 6), 90, -t, Arc2D.PIE);
+//            g.draw(s);
+//            int x1=(int)shape.getBounds().getX()-3;
+//            int y1=(int)(shape.getBounds().getY()+shape.getBounds().getHeight());
+//            int x2=(int)shape.getBounds().getX()-3;;
+//            int y2=(int)(shape.getBounds().getY()+shape.getBounds().getHeight())-(int)(((double) executor.getSumTime() / ManagerInitTree.getInstance().getTreeModelManager().getMaxTime())*shape.getBounds().getHeight());
+//
+//            Shape s= new Line2D.Double(x1,y1,x2,y2);
+//            g.draw(s);
         }
-        if (type == COORDINATOR) color = opt.getColorOfCoordinator();
-        if (type == MANAGER) color = opt.getColorOfManager();
-        if (type == INGENER) color = opt.getColorOfIngener();
+//        if (type == COORDINATOR) color = opt.getColorOfCoordinator();
+//        if (type == MANAGER) color = opt.getColorOfManager();
+//        if (type == INGENER) color = opt.getColorOfIngener();
 
         if (isEntered()) {
             g.setColor(Color.orange);
-            Shape s = new Ellipse2D.Double(shape.getBounds2D().getX() - 3, shape.getBounds2D().getY() - 3, shape.getBounds2D().getWidth() + 6, shape.getBounds2D().getHeight() + 6);
+            Shape s = new Rectangle2D.Double(shape.getBounds2D().getX() - 3, shape.getBounds2D().getY() - 3, shape.getBounds2D().getWidth() + 6, shape.getBounds2D().getHeight() + 6);
             g.fill(s);
         }
         g.setColor(color);
         if (isSelected()) color = opt.getColorOfSelection();
-        RoundGradientPaint rgp = new RoundGradientPaint(shape.getBounds().getX(), shape.getBounds().getY(), Color.WHITE,
-                new Point2D.Double(shape.getBounds().getBounds().getWidth() / 2 + 10, shape.getBounds().getBounds().getHeight() / 2), color);
-        g.setPaint(rgp);
-        g.fill(shape);
-//        rgp = new RoundGradientPaint(shape.getBounds().getX(), shape.getBounds().getY(), Color.BLUE,
-//                new Point2D.Double(shape.getBounds().getBounds().getWidth() / 2 + 20, shape.getBounds().getBounds().getHeight() / 2), Color.lightGray);
+//        RoundGradientPaint rgp = new RoundGradientPaint(shape.getBounds().getX(), shape.getBounds().getY(), Color.WHITE,
+//                new Point2D.Double(shape.getBounds().getBounds().getWidth() / 2 + 10, shape.getBounds().getBounds().getHeight() / 2), color);
+
+        if (type == COORDINATOR)
+            g.drawImage(coordinatorBi, null, (int) shape.getBounds().getX(), (int) shape.getBounds().getY());
+        if (type == MANAGER)
+            g.drawImage(managerBi, null, (int) shape.getBounds().getX(), (int) shape.getBounds().getY());
+        if (type == INGENER)
+            g.drawImage(ingenerBi, null, (int) shape.getBounds().getX(), (int) shape.getBounds().getY());
+
 //        g.setPaint(rgp);
+//        g.fill(shape);
         if (ManagerInitTree.getInstance().getInitParam() == ManagerInitTree.PROGRESS_INIT && information != null) {
             if (((Executor) information).isNew()) {
                 g.setColor(Color.BLUE);
@@ -135,7 +163,7 @@ public class MyTreeNode extends Node {
                 }
                 if (isNewTask) {
                     g.setColor(Color.GREEN);
-                    g.draw(new Rectangle2D.Double(shape.getBounds2D().getX() - 5, shape.getBounds2D().getY() - 5, shape.getBounds2D().getWidth() + 8, shape.getBounds2D().getHeight() + 8));
+                    g.draw(new Rectangle2D.Double(shape.getBounds2D().getX() - 1, shape.getBounds2D().getY() - 1, shape.getBounds2D().getWidth() + 2, shape.getBounds2D().getHeight() + 2));
                 }
             }
         }
@@ -156,8 +184,19 @@ public class MyTreeNode extends Node {
     private void drawNumber(Graphics2D g, String number) {
         Graphics gStr = label.getGraphics();
         FontMetrics fm = gStr.getFontMetrics();
-        g.setColor(Color.WHITE);
+        g.setColor(Color.ORANGE);
         g.setFont(new Font("Verdana", Font.BOLD, 14));
         g.drawString(number, (int) (shape.getBounds().getX() + shape.getBounds().getWidth() / 2 - fm.stringWidth(number) / 2), (int) (shape.getBounds().getY() + shape.getBounds().getHeight() / 2 + fm.getHeight() / 2 - 4));
     }
+
+    public BufferedImage setResize(BufferedImage img, int w, int h) {
+        BufferedImage bim;
+        ReplicateScaleFilter rsf = new ReplicateScaleFilter(w, h);
+        Image im = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(img.getSource(), rsf));
+        bim = new BufferedImage(im.getWidth(null), im.getHeight(null),
+                BufferedImage.TYPE_INT_RGB);
+        bim.getGraphics().drawImage(im, 0, 0, null);
+        return bim;
+    }
+
 }

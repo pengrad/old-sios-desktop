@@ -23,7 +23,7 @@ public class Options implements Serializable {
          colorOfIngener = Color.blue;
         colorOfManager = Color.magenta;
         colorOfCoordinator = Color.red;
-        colorOfConnection = Color.green.brighter();
+        colorOfConnection = Color.gray;
         colorOfSelection = Color.gray;
     }             
 
