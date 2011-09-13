@@ -104,7 +104,7 @@
                   <Component id="bMakeTasksByTree" min="-2" pref="76" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="bMakeTree" min="-2" pref="85" max="-2" attributes="0"/>
-                  <EmptySpace pref="488" max="32767" attributes="0"/>
+                  <EmptySpace pref="492" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -376,37 +376,47 @@
                       <Dimension value="[32767, 80]"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[297, 80]"/>
+                      <Dimension value="[297, 100]"/>
                     </Property>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="186" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="lName" alignment="0" pref="297" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="lTime" min="-2" pref="101" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lName" pref="287" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="bFixTask" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="200" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="bFixTask" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel6" min="-2" max="-2" attributes="1"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lName" min="-2" pref="18" max="-2" attributes="1"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jLabel10" min="-2" max="-2" attributes="1"/>
-                                  <Component id="lTime" pref="16" max="32767" attributes="1"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="lTime" max="32767" attributes="1"/>
+                                  <Component id="jLabel10" alignment="1" max="32767" attributes="1"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -433,6 +443,14 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="lTime">
+                    </Component>
+                    <Component class="javax.swing.JButton" name="bFixTask">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x417;&#x430;&#x43a;&#x440;&#x435;&#x43f;&#x438;&#x442;&#x44c;"/>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -536,7 +554,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jPanel10" min="-2" pref="24" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane3" pref="267" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane3" pref="261" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -644,7 +662,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jScrollPane1" pref="267" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="261" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>

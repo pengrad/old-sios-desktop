@@ -10,8 +10,12 @@
  */
 package model.tree.gui;
 
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ReplicateScaleFilter;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
@@ -104,6 +108,7 @@ public class TreePanel extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         lTime = new javax.swing.JLabel();
+        bFixTask = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -273,7 +278,7 @@ public class TreePanel extends javax.swing.JPanel {
                 .addComponent(bMakeTasksByTree, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bMakeTree, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(488, Short.MAX_VALUE))
+                .addContainerGap(492, Short.MAX_VALUE))
         );
 
         add(panelLeft, java.awt.BorderLayout.WEST);
@@ -287,7 +292,7 @@ public class TreePanel extends javax.swing.JPanel {
         pRight.setLayout(new javax.swing.BoxLayout(pRight, javax.swing.BoxLayout.Y_AXIS));
 
         jPanel11.setMaximumSize(new java.awt.Dimension(32767, 80));
-        jPanel11.setPreferredSize(new java.awt.Dimension(297, 80));
+        jPanel11.setPreferredSize(new java.awt.Dimension(297, 100));
 
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("     Наименование:");
@@ -295,31 +300,41 @@ public class TreePanel extends javax.swing.JPanel {
         jLabel10.setForeground(new java.awt.Color(102, 102, 102));
         jLabel10.setText("     Нагрузка:");
 
+        bFixTask.setText("Закрепить");
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel11Layout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addContainerGap(186, Short.MAX_VALUE))
-            .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-            .addGroup(jPanel11Layout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lTime, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addGap(120, 120, 120))
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(lName, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addComponent(jLabel6)
+                .addContainerGap())
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bFixTask)
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(bFixTask)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lName, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel10)
-                    .addComponent(lTime, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE))
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -328,7 +343,7 @@ public class TreePanel extends javax.swing.JPanel {
         jPanel7.setMaximumSize(new java.awt.Dimension(32767, 24));
         jPanel7.setPreferredSize(new java.awt.Dimension(65, 24));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("     Свойства элемента");
         jPanel7.add(jLabel1);
 
@@ -407,7 +422,7 @@ public class TreePanel extends javax.swing.JPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
         );
 
         jPanel8.add(jPanel6);
@@ -456,7 +471,7 @@ public class TreePanel extends javax.swing.JPanel {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
         );
 
         jPanel8.add(jPanel9);
@@ -595,9 +610,17 @@ public class TreePanel extends javax.swing.JPanel {
         bCoordinator.setCursor(new Cursor(Cursor.MOVE_CURSOR));
         bManager.setCursor(new Cursor(Cursor.MOVE_CURSOR));
         bIngener.setCursor(new Cursor(Cursor.MOVE_CURSOR));
-        bCoordinator.setIcon(createIconForButton(opt.getColorOfCoordinator(), width, height));
-        bManager.setIcon(createIconForButton(opt.getColorOfManager(), width, height));
-        bIngener.setIcon(createIconForButton(opt.getColorOfIngener(), width, height));
+//        bCoordinator.setIcon(createIconForButton(opt.getColorOfCoordinator(), width, height));
+//        bManager.setIcon(createIconForButton(opt.getColorOfManager(), width, height));
+//        bIngener.setIcon(createIconForButton(opt.getColorOfIngener(), width, height));
+        try {
+            bCoordinator.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(ImageIO.read(this.getClass().getResource("/model/tree/image/c.jpg")).getSource(), new ReplicateScaleFilter(width, height)))));
+            bManager.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(ImageIO.read(this.getClass().getResource("/model/tree/image/m.jpg")).getSource(), new ReplicateScaleFilter(width, height)))));
+            bIngener.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(ImageIO.read(this.getClass().getResource("/model/tree/image/e.jpg")).getSource(), new ReplicateScaleFilter(width, height)))));
+
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     private Icon createIconForButton(Color color, int width, int height) {
@@ -646,6 +669,7 @@ public class TreePanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton bCloseLPanel;
     public javax.swing.JButton bCoordinator;
+    public javax.swing.JButton bFixTask;
     public javax.swing.JButton bIngener;
     public javax.swing.JButton bMakeTasksByTree;
     public javax.swing.JButton bMakeTree;

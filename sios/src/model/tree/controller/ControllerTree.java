@@ -1,6 +1,7 @@
 package model.tree.controller;
 
 
+import model.manager.Controller;
 import model.model.Executor;
 import model.model.Task;
 import model.tree.ManagerInitTree;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
@@ -74,6 +76,8 @@ public class ControllerTree implements MouseListener, MouseMotionListener, Actio
     }
 
     public void init(int initParam) {
+        treePanel.bFixTask.removeActionListener(this);
+        treePanel.bFixTask.setVisible(false);
         this.initParam = initParam;
         tree.removeMouseListener(this);
         tree.removeMouseMotionListener(this);
@@ -131,6 +135,9 @@ public class ControllerTree implements MouseListener, MouseMotionListener, Actio
         } else if (initParam == ManagerInitTree.PROGRESS_INIT) {
             tree.addMouseListener(this);
             tree.addMouseMotionListener(this);
+            treePanel.bFixTask.addActionListener(this);
+              treePanel.bFixTask.setVisible(true);
+
             //Правая панель
             treePanel.jSplitPane1.setRightComponent(treePanel.pRight);
             treePanel.revalidate();
@@ -346,6 +353,8 @@ public class ControllerTree implements MouseListener, MouseMotionListener, Actio
             }
         } else if (e.getSource().equals(mEditFigure)) {
             editNode((Node) selectedFigure);
+        }else if(e.getSource().equals(treePanel.bFixTask)){
+            fixedTask();
         }
     }
 
@@ -417,6 +426,29 @@ public class ControllerTree implements MouseListener, MouseMotionListener, Actio
     private void disconnect(ConnectLine connectLine) {
         for (EventTree eventTree : events)
             eventTree.disconnect(connectLine);
+    }
+
+    public void fixedTask(){
+          for(Node node:modelTree.getAllNodesTree()){
+           Executor executor=((Executor)((MyTreeNode)node).getInforation());
+            if(executor.isNew()){
+             editNode(node);
+            }
+        }
+          Collection<Task> newTasks = Controller.get().getTaskManager().getAllNewTasks();
+        for (Task task : newTasks) {
+            if (Controller.get().getTaskManager().isFreeTask(task)) {
+                JOptionPane.showMessageDialog(treePanel, "Не все новые задачи распределены по исполнителям!", "Есть свободные задачи", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+        }
+        for (Task task : newTasks) {
+            task.setNew(false);
+        }
+        for (Executor executor : Controller.get().getEmplManager().getAllNewExecutors()) {
+            executor.setNew(false);
+        }
+        Controller.get().fireAllData();
     }
 
 }
