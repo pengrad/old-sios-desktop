@@ -2,6 +2,16 @@
 <project version="4">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
+    <buildFile url="file://$PROJECT_DIR$/sios-ant-test.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <maximumStackSize value="2" />
+      <properties>
+        <property name="-Dfile.encoding" value="Cp1251" />
+      </properties>
+    </buildFile>
   </component>
 </project>
 

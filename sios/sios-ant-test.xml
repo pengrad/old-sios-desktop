@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sios" default="all">
+  
+  
+  <property file="sios-ant-test.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <include name="**/?*.properties"/>
+    <include name="**/?*.xml"/>
+    <include name="**/?*.gif"/>
+    <include name="**/?*.png"/>
+    <include name="**/?*.jpeg"/>
+    <include name="**/?*.jpg"/>
+    <include name="**/?*.html"/>
+    <include name="**/?*.dtd"/>
+    <include name="**/?*.tld"/>
+    <include name="**/?*.ftl"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="jre/lib/alt-rt.jar"/>
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Global Libraries -->
+  
+  <path id="library.jtatto.classpath">
+    <pathelement location="D:/Docs/distr/!prog/java/!lib/JTatto.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module Sios -->
+  
+  <dirname property="module.sios.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.sios" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.sios" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.sios" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.sios" value="${compiler.args}"/>
+  
+  <property name="sios.output.dir" value="${module.sios.basedir}/out/production/Sios"/>
+  <property name="sios.testoutput.dir" value="${module.sios.basedir}/out/test/Sios"/>
+  
+  <path id="sios.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="sios.module.production.classpath">
+    <path refid="${module.jdk.classpath.sios}"/>
+    <path refid="library.jtatto.classpath"/>
+  </path>
+  
+  <path id="sios.runtime.production.module.classpath">
+    <pathelement location="${sios.output.dir}"/>
+    <path refid="library.jtatto.classpath"/>
+  </path>
+  
+  <path id="sios.module.classpath">
+    <path refid="${module.jdk.classpath.sios}"/>
+    <pathelement location="${sios.output.dir}"/>
+    <path refid="library.jtatto.classpath"/>
+  </path>
+  
+  <path id="sios.runtime.module.classpath">
+    <pathelement location="${sios.testoutput.dir}"/>
+    <pathelement location="${sios.output.dir}"/>
+    <path refid="library.jtatto.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.sios">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.sios">
+    <patternset refid="excluded.from.module.sios"/>
+  </patternset>
+  
+  <path id="sios.module.sourcepath">
+    <dirset dir="${module.sios.basedir}">
+      <include name="src"/>
+      <include name="video"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.sios" depends="compile.module.sios.production,compile.module.sios.tests" description="Compile module Sios"/>
+  
+  <target name="compile.module.sios.production" description="Compile module Sios; production classes">
+    <mkdir dir="${sios.output.dir}"/>
+    <javac destdir="${sios.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.sios}/javac" encoding="UTF-8">
+      <compilerarg line="${compiler.args.sios}"/>
+      <bootclasspath refid="sios.module.bootclasspath"/>
+      <classpath refid="sios.module.production.classpath"/>
+      <src refid="sios.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.sios"/>
+    </javac>
+    
+    <copy todir="${sios.output.dir}">
+      <fileset dir="${module.sios.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.sios.basedir}/video">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.sios.tests" depends="compile.module.sios.production" description="compile module Sios; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.sios" description="cleanup module">
+    <delete dir="${sios.output.dir}"/>
+    <delete dir="${sios.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.sios, clean.artifact.sios" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.sios" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.sios" value="${basedir}/out/artifacts/sios"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.sios.jar" value="${artifacts.temp.dir}/sios.jar"/>
+  </target>
+  
+  <target name="clean.artifact.sios" description="clean sios artifact output">
+    <delete dir="${artifact.output.sios}"/>
+  </target>
+  
+  <target name="artifact.sios" depends="init.artifacts, compile.module.sios" description="Build &apos;sios&apos; artifact">
+    <mkdir dir="${artifact.output.sios}"/>
+    <jar destfile="${temp.jar.path.sios.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset file="${basedir}/META-INF/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset dir="${sios.output.dir}"/>
+    </jar>
+    <copy file="${temp.jar.path.sios.jar}" tofile="${artifact.output.sios}/sios.jar"/>
+    <mkdir dir="${artifact.output.sios}/lib"/>
+    <copy file="${basedir}/../../../distr/!prog/java/!lib/JTatto.jar" tofile="${artifact.output.sios}/lib/JTatto.jar"/>
+    <mkdir dir="${artifact.output.sios}/video"/>
+    <copy file="video/sios.mpg" tofile="${artifact.output.sios}/video/sios.mpg"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.sios" description="Build all artifacts">
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
