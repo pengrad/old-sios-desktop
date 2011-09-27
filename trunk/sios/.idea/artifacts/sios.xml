@@ -1,10 +1,15 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="sios">
+  <artifact build-on-make="true" name="sios">
     <output-path>$PROJECT_DIR$/out/artifacts/sios</output-path>
-    <root id="archive" name="sios.jar">
-      <element id="module-output" name="Sios" />
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+    <root id="root">
+      <element id="archive" name="sios.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="Sios" />
+      </element>
+      <element id="directory" name="lib">
+        <element id="library" level="application" name="JTatto" />
       </element>
     </root>
   </artifact>
