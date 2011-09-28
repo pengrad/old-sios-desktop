@@ -144,7 +144,7 @@ public class MainFrame extends javax.swing.JFrame {
         setJMenuBar(menuBar);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-679)/2, (screenSize.height-502)/2, 679, 502);
+        setBounds((screenSize.width-800)/2, (screenSize.height-600)/2, 800, 600);
     }
 
     // Code for dispatching events from components to event handlers.

@@ -50,7 +50,7 @@ public class FStart extends javax.swing.JFrame {
         pContainre = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(1000, 700));
+        setMinimumSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
         pContainre.setLayout(new javax.swing.BoxLayout(pContainre, javax.swing.BoxLayout.LINE_AXIS));
