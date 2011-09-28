@@ -21,6 +21,7 @@ public class TasksPanel extends JPanel {
     private TaskTableModel model;
     private TaskTableModel modelNew;
     private JPopupMenu popupMenu;
+    private boolean isSynthesOnlyNew;
 
     private JTable currentTable;
 
@@ -61,6 +62,7 @@ public class TasksPanel extends JPanel {
         }
         bFixTasks.setVisible(isFixButton);
         bSynthes.setVisible(isSynthesButton);
+        isSynthesOnlyNew = (isFixButton && isSynthesButton);
     }
 
     @SuppressWarnings("unchecked")
@@ -292,7 +294,8 @@ public class TasksPanel extends JPanel {
     }//GEN-LAST:event_bEditTaskActionPerformed
 
     private void bSynthesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSynthesActionPerformed
-        manager.updateExecutorsByNewTasks();
+        if(isSynthesOnlyNew) manager.updateExecutorsByNewTasks();
+        else manager.synthesExecutorsByTasks();
     }//GEN-LAST:event_bSynthesActionPerformed
 
     private void bFixTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFixTasksActionPerformed
