@@ -45,6 +45,7 @@ import start.gui.*;
  */
 public class ControllerStart implements ActionListener, EventTree {
 
+    private int mode;
     public static final int SYNTHES = 1;
     public static final int ANALYS = 2;
 
@@ -69,7 +70,6 @@ public class ControllerStart implements ActionListener, EventTree {
     private JFileChooser dialogFile;
     private DChuseMode chuseMode;
     private DInfoSynthes infoSynthes;
-    private int mode;
 
     private DChooseStartMode dChooseStartMode;
 
@@ -229,9 +229,11 @@ public class ControllerStart implements ActionListener, EventTree {
         int res = dChooseStartMode.showDialog(fStart);
         switch (res) {
             case SYNTHES:
+                mode = SYNTHES;
                 createProjectForSynthes();
                 break;
             case ANALYS:
+                mode = ANALYS;
                 createProjectForBuilder();
                 break;
         }
@@ -290,7 +292,7 @@ public class ControllerStart implements ActionListener, EventTree {
         pCreate.pStep3.setVisible(false);
         pCreate.pStep4.setVisible(false);
         pCreate.pStep5.setVisible(false);
-        pCreate.pStep6.setVisible(true);
+        pCreate.pStep6.setVisible(false);
 
         pCreate.getLSteep1().setFont(fontSelectedSeep);
         pCreate.getLSteep1().setForeground(colorSelectedSteep);
@@ -352,12 +354,12 @@ public class ControllerStart implements ActionListener, EventTree {
             fStart.setTitle("Построение структуры");
             selectedPanel = pCreate.getpCreateDependens();
 //            pCreate.getbNext().setText("Далее");
-            pCreate.getbNext().setEnabled(true);
             pCreate.getLSteep4().setFont(fontSelectedSeep);
             pCreate.getLSteep4().setForeground(colorSelectedSteep);
             pCreate.getLSteep5().setFont(fontUnSelectedSteep);
             pCreate.getLSteep5().setForeground(colorUnSelectedSteep);
         }
+        pCreate.getbNext().setEnabled(true);
         ((CardLayout) pCreate.getpContener().getLayout()).previous(pCreate.getpContener());
     }
 
@@ -371,6 +373,7 @@ public class ControllerStart implements ActionListener, EventTree {
             pCreate.getLSteep2().setForeground(colorSelectedSteep);
             pCreate.getLSteep1().setFont(fontUnSelectedSteep);
             pCreate.getLSteep1().setForeground(colorUnSelectedSteep);
+            pCreate.getbNext().setEnabled(mode == ANALYS);
         } else if (selectedPanel == pCreate.getpCreateTask()) {
             selectedLabelPanel = pCreate.getpStep3();
             fStart.setTitle("Создание исполнителей");
@@ -402,60 +405,6 @@ public class ControllerStart implements ActionListener, EventTree {
         }
 
         ((CardLayout) pCreate.getpContener().getLayout()).next(pCreate.getpContener());
-    }
-
-    private void goPreviousForSynthes() {
-        if (selectedPanel == pCreate.getpCreateTask()) {
-            selectedLabelPanel = pCreate.getpStep1();
-            fStart.setTitle("Создание специализаций");
-            pCreate.getbPrevious().setEnabled(false);
-            selectedPanel = pCreate.getpCreateSpeciality();
-            pCreate.getLSteep1().setFont(fontSelectedSeep);
-            pCreate.getLSteep1().setForeground(colorSelectedSteep);
-            pCreate.getLSteep2().setFont(fontUnSelectedSteep);
-            pCreate.getLSteep2().setForeground(colorUnSelectedSteep);
-            ((CardLayout) pCreate.getpContener().getLayout()).previous(pCreate.getpContener());
-        } else if (selectedPanel == pCreate.getpCreateExecutor()) {
-            selectedLabelPanel = pCreate.getpStep2();
-            fStart.setTitle("Создание задач");
-            selectedPanel = pCreate.getpCreateTask();
-            pCreate.getLSteep2().setFont(fontSelectedSeep);
-            pCreate.getLSteep2().setForeground(colorSelectedSteep);
-            pCreate.getLSteep3().setFont(fontUnSelectedSteep);
-            pCreate.getLSteep3().setForeground(colorUnSelectedSteep);
-//            pCreate.getbNext().setText("Далее");
-            ((CardLayout) pCreate.getpContener().getLayout()).previous(pCreate.getpContener());
-            ((CardLayout) pCreate.getpContener().getLayout()).previous(pCreate.getpContener());
-            ((CardLayout) pCreate.getpContener().getLayout()).previous(pCreate.getpContener());
-        }
-    }
-
-    private void goNextForSynthes() {
-        if (selectedPanel == pCreate.getpCreateSpeciality()) {
-            selectedLabelPanel = pCreate.getpStep2();
-            fStart.setTitle("Создание задач");
-            pCreate.getbPrevious().setEnabled(true);
-            selectedPanel = pCreate.getpCreateTask();
-            pCreate.getLSteep2().setFont(fontSelectedSeep);
-            pCreate.getLSteep2().setForeground(colorSelectedSteep);
-            pCreate.getLSteep1().setFont(fontUnSelectedSteep);
-            pCreate.getLSteep1().setForeground(colorUnSelectedSteep);
-            ((CardLayout) pCreate.getpContener().getLayout()).next(pCreate.getpContener());
-        } else if (selectedPanel == pCreate.getpCreateTask()) {
-            selectedLabelPanel = pCreate.getpStep6();
-            ((CardLayout) pCreate.getpContener().getLayout()).next(pCreate.getpContener());
-            ((CardLayout) pCreate.getpContener().getLayout()).next(pCreate.getpContener());
-            ((CardLayout) pCreate.getpContener().getLayout()).next(pCreate.getpContener());
-            fStart.setTitle("Структура управления");
-            selectedPanel = pCreate.getpCreateExecutor();
-            pCreate.getLSteep6().setFont(fontSelectedSeep);
-            pCreate.getLSteep6().setForeground(colorSelectedSteep);
-            pCreate.getLSteep2().setFont(fontUnSelectedSteep);
-            pCreate.getLSteep2().setForeground(colorUnSelectedSteep);
-            pCreate.getbNext().setText("Готово");
-            updateTreeExecutor();
-            updateListTask();
-        }
     }
 
     private void goMake() {
