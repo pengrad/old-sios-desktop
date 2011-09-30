@@ -45,6 +45,10 @@ import start.gui.*;
  */
 public class ControllerStart implements ActionListener, EventTree {
 
+    public static final int SYNTHES = 1;
+    public static final int ANALYS = 2;
+
+
     private FStart fStart;
     //private DStart dStart;
     private pCreate pCreate;
@@ -66,6 +70,8 @@ public class ControllerStart implements ActionListener, EventTree {
     private DChuseMode chuseMode;
     private DInfoSynthes infoSynthes;
     private int mode;
+
+    private DChooseStartMode dChooseStartMode;
 
 
     public ControllerStart(DataManager manager) {
@@ -111,7 +117,7 @@ public class ControllerStart implements ActionListener, EventTree {
         pCreate.getTreeExecutors().setCellRenderer(new TreeRender());
 
         fStart.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/res/icon2.gif")).getImage());
-
+        dChooseStartMode = new DChooseStartMode(fStart, true, SYNTHES, ANALYS);
     }
 
     private void initListener() {
@@ -138,8 +144,7 @@ public class ControllerStart implements ActionListener, EventTree {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == pStart.getbNewProject()) {
-//            selectMode();
-            createProjectForBuilder();
+            startNewProject();
         } else if (e.getSource() == pStart.getbLoadProject()) {
             loadProject();
         } else if (e.getSource() == pStart.getbExit()) {
@@ -208,7 +213,7 @@ public class ControllerStart implements ActionListener, EventTree {
 //
 //    }
 
-    private void selectMode() {
+    private void selectMode_Old() {
         chuseMode.setLocationRelativeTo(fStart);
         int mode = chuseMode.open();
         this.mode = mode;
@@ -217,6 +222,18 @@ public class ControllerStart implements ActionListener, EventTree {
         }
         if (mode == DChuseMode.SYNTHES) {
             createProjectForSynthes();
+        }
+    }
+
+    private void startNewProject() {
+        int res = dChooseStartMode.showDialog(fStart);
+        switch (res) {
+            case SYNTHES:
+                createProjectForSynthes();
+                break;
+            case ANALYS:
+                createProjectForBuilder();
+                break;
         }
     }
 
@@ -290,9 +307,9 @@ public class ControllerStart implements ActionListener, EventTree {
         ((CardLayout) pCreate.getpContener().getLayout()).first(pCreate.getpContener());
     }
 
-
     private void exit() {
-        JOptionPane.showMessageDialog(getpStart(), "Вы действительно хотите покинуть прогамму?", "Внимание...", JOptionPane.YES_NO_OPTION);
+        int exit = JOptionPane.showConfirmDialog(getpStart(), "Вы действительно хотите покинуть прогамму?", "Внимание...", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) System.exit(0);
     }
 
     private void goMain() {
@@ -441,7 +458,6 @@ public class ControllerStart implements ActionListener, EventTree {
         }
     }
 
-
     private void goMake() {
         fStart.removeAll();
         fStart.setVisible(false);
@@ -455,33 +471,34 @@ public class ControllerStart implements ActionListener, EventTree {
     }
 
     private void generateTask() {
-       final Controller c = Controller.get();
+        final Controller c = Controller.get();
         final Collection<Task> tasks = c.getTaskManager().getExecTasks();
-       if(tasks.size()>0){
-        new SwingWorker() {
-            protected Object doInBackground() throws Exception {
-                Collection<Executor> executors = new SynthesManager().createExecutor(tasks);
-                SpecTemplateManager templateManager = c.getSpecTemplateManager().getTemplateByName(c.getOptionsManager().getTemplateManager());
+        if (tasks.size() > 0) {
+            new SwingWorker() {
+                protected Object doInBackground() throws Exception {
+                    Collection<Executor> executors = new SynthesManager().createExecutor(tasks);
+                    SpecTemplateManager templateManager = c.getSpecTemplateManager().getTemplateByName(c.getOptionsManager().getTemplateManager());
                     for (Executor executor : executors) {
                         templateManager.updateExecutor(executor);
                     }
                     c.setExecutors(executors);
                     Thread.sleep(1500);
-                return null;  //To change body of implemented methods use File | Settings | File Templates.
-            }
+                    return null;  //To change body of implemented methods use File | Settings | File Templates.
+                }
 
-            protected void done() {
-                infoSynthes.enabledButton();
-            }
+                protected void done() {
+                    infoSynthes.enabledButton();
+                }
 
-        }.execute();
-        infoSynthes.setLocationRelativeTo(fStart);
-        int mode = infoSynthes.open();
-        if (mode == DInfoSynthes.GO_MAIN) {
-            goMake();
-        }  } else{
-           JOptionPane.showMessageDialog(fStart,"Нет исходных данных(задач) для синтеза структуры","",JOptionPane.INFORMATION_MESSAGE);
-       }
+            }.execute();
+            infoSynthes.setLocationRelativeTo(fStart);
+            int mode = infoSynthes.open();
+            if (mode == DInfoSynthes.GO_MAIN) {
+                goMake();
+            }
+        } else {
+            JOptionPane.showMessageDialog(fStart, "Нет исходных данных(задач) для синтеза структуры", "", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     private void loadProject() {
