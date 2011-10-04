@@ -62,7 +62,8 @@ public class SpecDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         listSQ = new javax.swing.JList();
         pHelpText = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textHelpSpec = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -210,9 +211,12 @@ public class SpecDialog extends javax.swing.JDialog {
         pHelpText.setBackground(TestImg.getInstance().getColorInfPanel());
         pHelpText.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.orange));
         pHelpText.setPreferredSize(new java.awt.Dimension(10, 70));
+        pHelpText.setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setText("<текст>");
-        pHelpText.add(jLabel3);
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setViewportView(textHelpSpec);
+
+        pHelpText.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         pRoot.add(pHelpText, java.awt.BorderLayout.NORTH);
 
@@ -356,17 +360,18 @@ public class SpecDialog extends javax.swing.JDialog {
     private javax.swing.JButton bUp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JList listSQ;
     private javax.swing.JPanel pHelpText;
     private javax.swing.JPanel pRoot;
     private javax.swing.JTextField specName;
+    private javax.swing.JEditorPane textHelpSpec;
     // End of variables declaration//GEN-END:variables
 
 }

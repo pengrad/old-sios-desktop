@@ -50,6 +50,13 @@ public class ControllerStart implements ActionListener, EventTree {
     public static final int SYNTHES = 1;
     public static final int ANALYS = 2;
 
+    public static final String HELP_CHOOSE_MODE = ResourceManager.getParam("choose_mode_dialog");
+    public static final String HELP_PANEL_SPEC =  ResourceManager.getParam("panel_spec");
+    public static final String HELP_PANEL_TASKS = ResourceManager.getParam("panel_tasks");
+    public static final String HELP_PANEL_EXECS = ResourceManager.getParam("panel_execs");
+    public static final String HELP_PANEL_TASKS_EXECS = ResourceManager.getParam("panel_tasksToExecs");
+    public static final String HELP_PANEL_TREE = ResourceManager.getParam("panel_tree");
+
 
     private FStart fStart;
     //private DStart dStart;
@@ -119,11 +126,24 @@ public class ControllerStart implements ActionListener, EventTree {
 
         fStart.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/res/icon2.gif")).getImage());
         dChooseStartMode = new DChooseStartMode(fStart, true, SYNTHES, ANALYS);
-        dChooseStartMode.setTextHelp(ResourceManager.getParam("choose_mode_dialog"));
-        pCreate.initTextHelpPanes(ResourceManager.getParam("panel_spec"),
-                ResourceManager.getParam("panel_tasks"), ResourceManager.getParam("panel_execs"),
-                ResourceManager.getParam("panel_tasksToExecs"), ResourceManager.getParam("panel_tree"));
+        setTextHelp(dChooseStartMode.getTextHelpPane(), HELP_CHOOSE_MODE);
 
+//        setTextHelp(textHelpSpec, textSpec);
+//        setTextHelp(textHelpTasks, textTasks);
+//        setTextHelp(textHelpExecs, textExecs);
+//        setTextHelp(textHelpTaskToExec, textTaskToExecs);
+//        setTextHelp(textHelpTree, textTree);
+    }
+
+    public void setTextHelp(JEditorPane paneHelp, String textHelp) {
+        StringBuilder text = new StringBuilder();
+        if (textHelp == null) textHelp = "";
+        for (String s : textHelp.split("\n")) {
+            text.append(s);
+            text.append("<p>");
+        }
+        text.delete(text.length() - 3, text.length());
+        paneHelp.setText(text.toString());
     }
 
     private void initListener() {
@@ -199,36 +219,6 @@ public class ControllerStart implements ActionListener, EventTree {
             addTaskExecutor();
         }
 
-    }
-
-//    private void createNewProject() {
-//        //Удаляем старотовую панель и добавляем панель костуктор
-//        fStart.getpContainre().removeAll();
-//        fStart.getpContainre().add(pCreate);
-//        fStart.getpContainre().revalidate();
-//        fStart.getpContainre().repaint();
-//        pStart.stopVideo();
-//        pCreate.getbPrevious().setEnabled(false);
-//        pCreate.getbNext().setEnabled(true);
-//
-//        pCreate.getpCont().removeAll();
-//        pCreate.getpCont().add(pCreate.getpQuery());
-//        pCreate.getpCont().revalidate();
-//        pCreate.getpCont().repaint();
-//        selectedPanel = pCreate.getpQuery();
-//
-//    }
-
-    private void selectMode_Old() {
-        chuseMode.setLocationRelativeTo(fStart);
-        int mode = chuseMode.open();
-        this.mode = mode;
-        if (mode == DChuseMode.BUILDER) {
-            createProjectForBuilder();
-        }
-        if (mode == DChuseMode.SYNTHES) {
-            createProjectForSynthes();
-        }
     }
 
     private void startNewProject() {

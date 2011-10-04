@@ -58,7 +58,8 @@ public class TaskDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         pHelpText = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textHelpTasks = new javax.swing.JEditorPane();
 
         setTitle("Изменение задачи");
         setIconImage(null);
@@ -170,16 +171,19 @@ public class TaskDialog extends javax.swing.JDialog {
         pHelpText.setBackground(TestImg.getInstance().getColorInfPanel());
         pHelpText.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, java.awt.Color.orange));
         pHelpText.setPreferredSize(new java.awt.Dimension(10, 70));
+        pHelpText.setLayout(new java.awt.BorderLayout());
 
-        jLabel5.setText("<текст>");
-        pHelpText.add(jLabel5);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setViewportView(textHelpTasks);
+
+        pHelpText.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         pRoot.add(pHelpText, java.awt.BorderLayout.NORTH);
 
         getContentPane().add(pRoot, java.awt.BorderLayout.CENTER);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width - 419) / 2, (screenSize.height - 321) / 2, 419, 321);
+        setBounds((screenSize.width-419)/2, (screenSize.height-321)/2, 419, 321);
     }// </editor-fold>//GEN-END:initComponents
 
     private void initModels(SpecialityManager specManager, OptionsManager options) {
@@ -288,14 +292,15 @@ public class TaskDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pHelpText;
     private javax.swing.JPanel pRoot;
     private javax.swing.JTextField taskName;
     private javax.swing.JComboBox taskSpec;
     private javax.swing.JComboBox taskSpecType;
     private javax.swing.JSpinner taskTime;
+    private javax.swing.JEditorPane textHelpTasks;
     // End of variables declaration//GEN-END:variables
 }

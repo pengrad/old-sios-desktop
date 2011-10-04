@@ -81,7 +81,8 @@ public class EmplDialog extends javax.swing.JDialog {
         bAddSpec = new javax.swing.JButton();
         bDelSpec = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textHelpExecs = new javax.swing.JEditorPane();
         jPanel15 = new javax.swing.JPanel();
         bSaveEmpl = new javax.swing.JButton();
         bCancelEmpl = new javax.swing.JButton();
@@ -187,9 +188,12 @@ public class EmplDialog extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.orange));
         jPanel1.setMinimumSize(new java.awt.Dimension(57, 70));
         jPanel1.setPreferredSize(new java.awt.Dimension(575, 70));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setText("<текст>");
-        jPanel1.add(jLabel3);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setViewportView(textHelpExecs);
+
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel9.add(jPanel1, java.awt.BorderLayout.NORTH);
 
@@ -593,7 +597,6 @@ public class EmplDialog extends javax.swing.JDialog {
     private javax.swing.JTextField emplName;
     private javax.swing.JComboBox emplTypeExecutor;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel15;
@@ -601,10 +604,12 @@ public class EmplDialog extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JPanel panelCard;
     private javax.swing.JPanel panelGeneral;
     private javax.swing.JTable tableSpec;
+    private javax.swing.JEditorPane textHelpExecs;
     // End of variables declaration//GEN-END:variables
 
 }

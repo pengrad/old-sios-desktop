@@ -54,15 +54,8 @@ public class DChooseStartMode extends JDialog {
         this.add(panel);
     }
 
-    public void setTextHelp(String textHelp) {
-        StringBuilder text = new StringBuilder();
-        if(textHelp == null) textHelp="";
-        for(String s : textHelp.split("\n")) {
-            text.append(s);
-            text.append("<p>");
-        }
-        text.delete(text.length() - 3, text.length());
-        textPane.setText(text.toString());
+    public JEditorPane getTextHelpPane() {
+        return textPane;
     }
 
     public int showDialog(Component componentRelative) {
