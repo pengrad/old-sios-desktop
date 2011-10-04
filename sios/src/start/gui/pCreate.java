@@ -29,9 +29,10 @@ public class pCreate extends javax.swing.JPanel {
 
     public pCreate() {
         initComponents();
+        initTextHelpPanes();
     }
 
-    public void initTextHelpPanes(String textSpec, String textTasks, String textExecs, String textTaskToExecs, String textTree) {
+    public void initTextHelpPanes() {
         textHelpSpec.setContentType("text/html");
         textHelpTasks.setContentType("text/html");
         textHelpExecs.setContentType("text/html");
@@ -43,23 +44,6 @@ public class pCreate extends javax.swing.JPanel {
         textHelpExecs.setEditable(false);
         textHelpTaskToExec.setEditable(false);
         textHelpTree.setEditable(false);
-
-        setTextHelp(textHelpSpec, textSpec);
-        setTextHelp(textHelpTasks, textTasks);
-        setTextHelp(textHelpExecs, textExecs);
-        setTextHelp(textHelpTaskToExec, textTaskToExecs);
-        setTextHelp(textHelpTree, textTree);
-    }
-
-    public void setTextHelp(JEditorPane paneHelp, String textHelp) {
-        StringBuilder text = new StringBuilder();
-        if(textHelp == null) textHelp="";
-        for(String s : textHelp.split("\n")) {
-            text.append(s);
-            text.append("<p>");
-        }
-        text.delete(text.length() - 3, text.length());
-        paneHelp.setText(text.toString());
     }
 
 
