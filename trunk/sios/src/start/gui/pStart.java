@@ -181,12 +181,10 @@ public class pStart extends javax.swing.JPanel {
     }
 
     public InputStream getVideoStream() {
-        String s = new File("").getAbsolutePath().replace('\\', '/') + "/video/" + "sios.mpg";
-        System.out.println(s);
-
+        //String s = new File("").getAbsolutePath().replace('\\', '/') + "/video/" + "sios.mpg";
         InputStream fis = null;
         try {
-            return fis = new DataInputStream(new FileInputStream(new File(s)));
+            return fis = new DataInputStream(new FileInputStream(new File("res/video/sios.mpg")));
 
 //            return fis = new DataInputStream(new FileInputStream(new File("c:\\temp\\СИОС-2.mpg")));
         } catch (FileNotFoundException e) {

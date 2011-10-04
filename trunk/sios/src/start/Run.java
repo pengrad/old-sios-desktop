@@ -24,7 +24,7 @@ public class Run {
 //            e.printStackTrace();
         }
         Controller.get().init();
-        ResourceManager.init(new File("settings.xml"));
+        ResourceManager.init(new File("res/settings.xml"));
 //        TreeModelManager treeManager = new TreeModelManager().init();
         DataManager dataManager = new DataManager();
         ManagerInitTree.getInstance().setTreeInit(ManagerInitTree.CREATE_INIT);
