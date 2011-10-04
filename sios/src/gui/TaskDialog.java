@@ -37,6 +37,8 @@ public class TaskDialog extends javax.swing.JDialog {
         initComponents();
         initModels(specManager, options);
         if (!helpText) pRoot.remove(pHelpText);
+        textHelpTasks.setContentType("text/html");
+        textHelpTasks.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -266,9 +268,10 @@ public class TaskDialog extends javax.swing.JDialog {
         modelSpecQual.setSelectedItem(task.getMinSpecQualify());
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    public JEditorPane getTextHelpPane() {
+        return textHelpTasks;
+    }
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 

@@ -56,6 +56,9 @@ public class ControllerStart implements ActionListener, EventTree {
     public static final String HELP_PANEL_EXECS = ResourceManager.getParam("panel_execs");
     public static final String HELP_PANEL_TASKS_EXECS = ResourceManager.getParam("panel_tasksToExecs");
     public static final String HELP_PANEL_TREE = ResourceManager.getParam("panel_tree");
+    public static final String HELP_DIALOG_SPEC = ResourceManager.getParam("dialog_spec");
+    public static final String HELP_DIALOG_TASKS = ResourceManager.getParam("dialog_tasks");
+    public static final String HELP_DIALOG_EXECS = ResourceManager.getParam("dialog_execs");
 
 
     private FStart fStart;
@@ -126,13 +129,16 @@ public class ControllerStart implements ActionListener, EventTree {
 
         fStart.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/res/icon2.gif")).getImage());
         dChooseStartMode = new DChooseStartMode(fStart, true, SYNTHES, ANALYS);
-        setTextHelp(dChooseStartMode.getTextHelpPane(), HELP_CHOOSE_MODE);
 
-//        setTextHelp(textHelpSpec, textSpec);
-//        setTextHelp(textHelpTasks, textTasks);
-//        setTextHelp(textHelpExecs, textExecs);
-//        setTextHelp(textHelpTaskToExec, textTaskToExecs);
-//        setTextHelp(textHelpTree, textTree);
+        setTextHelp(dChooseStartMode.getTextHelpPane(), HELP_CHOOSE_MODE);
+        setTextHelp(emplDialog.getTextHelpPane(), HELP_DIALOG_EXECS);
+        setTextHelp(dialogSpec.getTextHelpPane(), HELP_DIALOG_SPEC);
+        setTextHelp(taskDialog.getTextHelpPane(), HELP_DIALOG_TASKS);
+        setTextHelp(pCreate.getTextHelpSpec(), HELP_PANEL_SPEC);
+        setTextHelp(pCreate.getTextHelpTasks(), HELP_PANEL_TASKS);
+        setTextHelp(pCreate.getTextHelpExecs(), HELP_PANEL_EXECS);
+        setTextHelp(pCreate.getTextHelpTaskToExec(), HELP_PANEL_TASKS_EXECS);
+        setTextHelp(pCreate.getTextHelpTree(), HELP_PANEL_TREE);
     }
 
     public void setTextHelp(JEditorPane paneHelp, String textHelp) {
