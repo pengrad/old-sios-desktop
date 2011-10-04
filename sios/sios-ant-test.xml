@@ -166,10 +166,6 @@
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>
-      <fileset dir="${module.sios.basedir}/video">
-        <patternset refid="compiler.resources"/>
-        <type type="file"/>
-      </fileset>
     </copy>
   </target>
   
@@ -208,8 +204,11 @@
     <copy file="${temp.jar.path.sios.jar}" tofile="${artifact.output.sios}/sios.jar"/>
     <mkdir dir="${artifact.output.sios}/lib"/>
     <copy file="${basedir}/../../../distr/!prog/java/!lib/JTatto.jar" tofile="${artifact.output.sios}/lib/JTatto.jar"/>
-    <mkdir dir="${artifact.output.sios}/video"/>
-    <copy file="video/sios.mpg" tofile="${artifact.output.sios}/video/sios.mpg"/>
+    <mkdir dir="${artifact.output.sios}/res"/>
+    <mkdir dir="${artifact.output.sios}/res/video"/>
+    <copy file="${basedir}/res/video/sios.mpg" tofile="${artifact.output.sios}/res/video/sios.mpg"/>
+    <copy file="${basedir}/res/settings.xml" tofile="${artifact.output.sios}/res/settings.xml"/>
+    <copy file="${basedir}/res/start.bat" tofile="${artifact.output.sios}/start.bat"/>
   </target>
   
   <target name="build.all.artifacts" depends="artifact.sios" description="Build all artifacts">
