@@ -3,6 +3,7 @@ package start;
 
 import gui.SpecDialog;
 import gui.TaskDialog;
+import manager.ResourceManager;
 import manager.SynthesManager;
 import manager.TreeEventManager;
 import manager.GUIManager;
@@ -118,6 +119,11 @@ public class ControllerStart implements ActionListener, EventTree {
 
         fStart.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/res/icon2.gif")).getImage());
         dChooseStartMode = new DChooseStartMode(fStart, true, SYNTHES, ANALYS);
+        dChooseStartMode.setTextHelp(ResourceManager.getParam("choose_mode_dialog"));
+        pCreate.initTextHelpPanes(ResourceManager.getParam("panel_spec"),
+                ResourceManager.getParam("panel_tasks"), ResourceManager.getParam("panel_execs"),
+                ResourceManager.getParam("panel_tasksToExecs"), ResourceManager.getParam("panel_tree"));
+
     }
 
     private void initListener() {

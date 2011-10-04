@@ -1,11 +1,13 @@
 package start;
 
+import manager.ResourceManager;
 import model.manager.Controller;
 import model.manager.TreeModelManager;
 import model.tree.ManagerInitTree;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,6 +24,7 @@ public class Run {
 //            e.printStackTrace();
         }
         Controller.get().init();
+        ResourceManager.init(new File("settings.xml"));
 //        TreeModelManager treeManager = new TreeModelManager().init();
         DataManager dataManager = new DataManager();
         ManagerInitTree.getInstance().setTreeInit(ManagerInitTree.CREATE_INIT);

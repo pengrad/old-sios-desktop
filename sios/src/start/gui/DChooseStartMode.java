@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 public class DChooseStartMode extends JDialog {
 
     private int result;
+    private JEditorPane textPane;
 
     public DChooseStartMode(JFrame parent, boolean modal, int bSynthes, int bAnalys) {
         super(parent, modal);
@@ -22,8 +23,9 @@ public class DChooseStartMode extends JDialog {
 
     private void initComponents(final int bSynthes, final int bAnalys) {
         setTitle("Выберите режим...");
-        setSize(300, 200);
+        setSize(300, 300);
         setResizable(false);
+        setMaximumSize(new Dimension(300, 1000));
         this.setLayout(new BorderLayout());
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 20));
         JButton b1 = new JButton(new AbstractAction("Синтез") {
@@ -42,12 +44,25 @@ public class DChooseStartMode extends JDialog {
         panel.add(b1);
         this.add(panel, BorderLayout.NORTH);
         panel = new JPanel(new BorderLayout());
-        JEditorPane text = new JEditorPane("text/html", "");
-        text.setText("<h3>Описание</h3>");
-        text.setEditable(false);
-        panel.add(text);
+        textPane = new JEditorPane();
+        //textPane = new JEditorPane("text/html", "");
+        textPane.setContentType("text/html");
+        textPane.setText("Описание");
+        textPane.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textPane);
+        panel.add(scrollPane);
         this.add(panel);
-        pack();
+    }
+
+    public void setTextHelp(String textHelp) {
+        StringBuilder text = new StringBuilder();
+        if(textHelp == null) textHelp="";
+        for(String s : textHelp.split("\n")) {
+            text.append(s);
+            text.append("<p>");
+        }
+        text.delete(text.length() - 3, text.length());
+        textPane.setText(text.toString());
     }
 
     public int showDialog(Component componentRelative) {
