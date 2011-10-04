@@ -25,9 +25,44 @@ public class pCreate extends javax.swing.JPanel {
     /**
      * Creates new form pCreate
      */
+    JEditorPane[] panesHelp;
+
     public pCreate() {
         initComponents();
     }
+
+    public void initTextHelpPanes(String textSpec, String textTasks, String textExecs, String textTaskToExecs, String textTree) {
+        textHelpSpec.setContentType("text/html");
+        textHelpTasks.setContentType("text/html");
+        textHelpExecs.setContentType("text/html");
+        textHelpTaskToExec.setContentType("text/html");
+        textHelpTree.setContentType("text/html");
+
+        textHelpSpec.setEditable(false);
+        textHelpTasks.setEditable(false);
+        textHelpExecs.setEditable(false);
+        textHelpTaskToExec.setEditable(false);
+        textHelpTree.setEditable(false);
+
+        setTextHelp(textHelpSpec, textSpec);
+        setTextHelp(textHelpTasks, textTasks);
+        setTextHelp(textHelpExecs, textExecs);
+        setTextHelp(textHelpTaskToExec, textTaskToExecs);
+        setTextHelp(textHelpTree, textTree);
+    }
+
+    public void setTextHelp(JEditorPane paneHelp, String textHelp) {
+        StringBuilder text = new StringBuilder();
+        if(textHelp == null) textHelp="";
+        for(String s : textHelp.split("\n")) {
+            text.append(s);
+            text.append("<p>");
+        }
+        text.delete(text.length() - 3, text.length());
+        paneHelp.setText(text.toString());
+    }
+
+
 
     /**
      * This method is called from within the constructor to
@@ -52,60 +87,78 @@ public class pCreate extends javax.swing.JPanel {
         pCreateProject = new javax.swing.JPanel();
         pModificateProject = new javax.swing.JPanel();
         pContPanel = new javax.swing.JPanel();
-        pSteep = new javax.swing.JPanel(){ public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // TestImg.getInstance().drawLeftPanel(g,this );
-            //            g2d.dispose();
-        }} ;
-        pStep1 = new javax.swing.JPanel(){ public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            TestImg.getInstance().drawLabel(g,this);
-            //            g2d.dispose();
-        }} ;
+        pSteep = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // TestImg.getInstance().drawLeftPanel(g,this );
+                //            g2d.dispose();
+            }
+        };
+        pStep1 = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                TestImg.getInstance().drawLabel(g, this);
+                //            g2d.dispose();
+            }
+        };
         lSteep1 = new javax.swing.JLabel();
-        pStep2 = new javax.swing.JPanel(){ public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            TestImg.getInstance().drawLabel(g,this);
-            //            g2d.dispose();
-        }} ;
+        pStep2 = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                TestImg.getInstance().drawLabel(g, this);
+                //            g2d.dispose();
+            }
+        };
         lSteep2 = new javax.swing.JLabel();
-        pStep3 = new javax.swing.JPanel() { public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            TestImg.getInstance().drawLabel(g,this);
-            //            g2d.dispose();
-        }};
+        pStep3 = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                TestImg.getInstance().drawLabel(g, this);
+                //            g2d.dispose();
+            }
+        };
         lSteep3 = new javax.swing.JLabel();
-        pStep4 = new javax.swing.JPanel(){ public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            TestImg.getInstance().drawLabel(g,this);
-            //            g2d.dispose();
-        }} ;
+        pStep4 = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                TestImg.getInstance().drawLabel(g, this);
+                //            g2d.dispose();
+            }
+        };
         lSteep4 = new javax.swing.JLabel();
-        pStep5 = new javax.swing.JPanel() { public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            TestImg.getInstance().drawLabel(g,this);
-            //            g2d.dispose();
-        }};
+        pStep5 = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                TestImg.getInstance().drawLabel(g, this);
+                //            g2d.dispose();
+            }
+        };
         lSteep5 = new javax.swing.JLabel();
-        pStep6 = new javax.swing.JPanel() { public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            TestImg.getInstance().drawLabel(g,this);
-            //            g2d.dispose();
-        }};
+        pStep6 = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                TestImg.getInstance().drawLabel(g, this);
+                //            g2d.dispose();
+            }
+        };
         lSteep6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        pContener = new javax.swing.JPanel(){ public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            // TestImg.getInstance().drawContenerPanel(g, this);
-        }};
-        pCreateSpeciality = new javax.swing.JPanel(){ public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            //    TestImg.getInstance().drawDownPanel(g, this);
+        pContener = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // TestImg.getInstance().drawContenerPanel(g, this);
+            }
+        };
+        pCreateSpeciality = new javax.swing.JPanel() {
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                //    TestImg.getInstance().drawDownPanel(g, this);
 
-            //            g2d.dispose();
-        }} ;
-        jPanel5 = new javax.swing.JPanel(){
+                //            g2d.dispose();
+            }
+        };
+        jPanel5 = new javax.swing.JPanel() {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 //        TestImg.getInstance().drawDownPanel(g, this);
@@ -119,7 +172,8 @@ public class pCreate extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tSpeciality = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        textHelpSpec = new javax.swing.JEditorPane();
         pCreateTask = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         bAddTask = new javax.swing.JButton();
@@ -129,7 +183,8 @@ public class pCreate extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tTask = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        textHelpTasks = new javax.swing.JEditorPane();
         pCreateExecutor = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         bAddExecutor = new javax.swing.JButton();
@@ -138,12 +193,16 @@ public class pCreate extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         tExecutor = new javax.swing.JTable();
         jPanel11 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        textHelpExecs = new javax.swing.JEditorPane();
         pCreateDependens = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        textHelpTree = new javax.swing.JEditorPane();
         pCreateTaskForExecutor = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        textHelpTaskToExec = new javax.swing.JEditorPane();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         treeExecutors = new javax.swing.JTree();
@@ -157,14 +216,14 @@ public class pCreate extends javax.swing.JPanel {
         pViewStructure = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         pCont = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel(){
+        jPanel2 = new javax.swing.JPanel() {
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 TestImg.getInstance().drawDownPanel(g, this);
 
                 //            g2d.dispose();
             }
-        } ;
+        };
         bMain = new javax.swing.JButton();
         bPrevious = new javax.swing.JButton();
         bNext = new javax.swing.JButton();
@@ -179,12 +238,12 @@ public class pCreate extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
         jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 645, Short.MAX_VALUE)
         );
         jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
+                jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 102, Short.MAX_VALUE)
         );
 
         pQuery.add(jPanel15, java.awt.BorderLayout.NORTH);
@@ -308,12 +367,12 @@ public class pCreate extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 250, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 50, Short.MAX_VALUE)
         );
 
         pSteep.add(jPanel1);
@@ -344,15 +403,15 @@ public class pCreate extends javax.swing.JPanel {
         pCreateSpeciality.add(jPanel5, java.awt.BorderLayout.SOUTH);
 
         tSpeciality.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane1.setViewportView(tSpeciality);
 
@@ -361,25 +420,12 @@ public class pCreate extends javax.swing.JPanel {
         jPanel7.setBackground(TestImg.getInstance().getColorInfPanel());
         jPanel7.setBorder(new javax.swing.border.LineBorder(java.awt.Color.orange, 1, true));
         jPanel7.setPreferredSize(new java.awt.Dimension(647, 104));
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
-        jLabel4.setText("Такст");
+        jScrollPane10.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane10.setViewportView(textHelpSpec);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(275, 275, 275))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel4)
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
+        jPanel7.add(jScrollPane10, java.awt.BorderLayout.CENTER);
 
         pCreateSpeciality.add(jPanel7, java.awt.BorderLayout.NORTH);
 
@@ -421,15 +467,15 @@ public class pCreate extends javax.swing.JPanel {
         pCreateTask.add(jPanel6, java.awt.BorderLayout.SOUTH);
 
         tTask.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane2.setViewportView(tTask);
 
@@ -438,25 +484,12 @@ public class pCreate extends javax.swing.JPanel {
         jPanel9.setBackground(TestImg.getInstance().getColorInfPanel());
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.orange));
         jPanel9.setPreferredSize(new java.awt.Dimension(647, 104));
+        jPanel9.setLayout(new java.awt.BorderLayout());
 
-        jLabel5.setText("Такст");
+        jScrollPane9.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane9.setViewportView(textHelpTasks);
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(344, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(275, 275, 275))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel5)
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
+        jPanel9.add(jScrollPane9, java.awt.BorderLayout.CENTER);
 
         pCreateTask.add(jPanel9, java.awt.BorderLayout.NORTH);
 
@@ -484,15 +517,15 @@ public class pCreate extends javax.swing.JPanel {
         pCreateExecutor.add(jPanel10, java.awt.BorderLayout.SOUTH);
 
         tExecutor.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
+                new Object[][]{
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String[]{
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
         ));
         jScrollPane3.setViewportView(tExecutor);
 
@@ -501,25 +534,12 @@ public class pCreate extends javax.swing.JPanel {
         jPanel11.setBackground(TestImg.getInstance().getColorInfPanel());
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.orange));
         jPanel11.setPreferredSize(new java.awt.Dimension(647, 104));
+        jPanel11.setLayout(new java.awt.BorderLayout());
 
-        jLabel6.setText("Такст");
+        jScrollPane8.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane8.setViewportView(textHelpExecs);
 
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(275, 275, 275))
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel11Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel6)
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
+        jPanel11.add(jScrollPane8, java.awt.BorderLayout.CENTER);
 
         pCreateExecutor.add(jPanel11, java.awt.BorderLayout.NORTH);
 
@@ -531,17 +551,12 @@ public class pCreate extends javax.swing.JPanel {
         jPanel13.setBackground(TestImg.getInstance().getColorInfPanel());
         jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.orange));
         jPanel13.setPreferredSize(new java.awt.Dimension(647, 104));
+        jPanel13.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
-        jPanel13.setLayout(jPanel13Layout);
-        jPanel13Layout.setHorizontalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 646, Short.MAX_VALUE)
-        );
-        jPanel13Layout.setVerticalGroup(
-            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
-        );
+        jScrollPane6.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane6.setViewportView(textHelpTree);
+
+        jPanel13.add(jScrollPane6, java.awt.BorderLayout.CENTER);
 
         pCreateDependens.add(jPanel13, java.awt.BorderLayout.NORTH);
 
@@ -554,25 +569,12 @@ public class pCreate extends javax.swing.JPanel {
         );
         jPanel14.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.orange));
         jPanel14.setPreferredSize(new java.awt.Dimension(647, 104));
+        jPanel14.setLayout(new java.awt.BorderLayout());
 
-        jLabel8.setText("kmcjkiwemjcikwec");
+        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane7.setViewportView(textHelpTaskToExec);
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(265, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(275, 275, 275))
-        );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel14Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel8)
-                .addContainerGap(43, Short.MAX_VALUE))
-        );
+        jPanel14.add(jScrollPane7, java.awt.BorderLayout.CENTER);
 
         pCreateTaskForExecutor.add(jPanel14, java.awt.BorderLayout.NORTH);
 
@@ -588,12 +590,12 @@ public class pCreate extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
         jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 51, Short.MAX_VALUE)
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 51, Short.MAX_VALUE)
         );
         jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 20, Short.MAX_VALUE)
+                jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 20, Short.MAX_VALUE)
         );
 
         jPanel12.add(jPanel20);
@@ -606,25 +608,25 @@ public class pCreate extends javax.swing.JPanel {
 
         jPanel8.add(jPanel12);
 
-        listTasks.setModel(new DefaultListModel() );
+        listTasks.setModel(new DefaultListModel());
         jScrollPane5.setViewportView(listTasks);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
 
         pCreateTaskForExecutor.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -641,12 +643,12 @@ public class pCreate extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 646, Short.MAX_VALUE)
+                jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 645, Short.MAX_VALUE)
         );
         jPanel21Layout.setVerticalGroup(
-            jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 102, Short.MAX_VALUE)
+                jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 102, Short.MAX_VALUE)
         );
 
         pViewStructure.add(jPanel21, java.awt.BorderLayout.NORTH);
@@ -687,12 +689,12 @@ public class pCreate extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bEditTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditTaskActionPerformed
-  
+
     }//GEN-LAST:event_bEditTaskActionPerformed
 
     private void bRemoveExecutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRemoveExecutorActionPerformed
 
-}//GEN-LAST:event_bRemoveExecutorActionPerformed
+    }//GEN-LAST:event_bRemoveExecutorActionPerformed
 
     private void bMakeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMakeActionPerformed
         // TODO add your handling code here:
@@ -727,10 +729,6 @@ public class pCreate extends javax.swing.JPanel {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -754,10 +752,15 @@ public class pCreate extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel lSteep1;
     private javax.swing.JLabel lSteep2;
     private javax.swing.JLabel lSteep3;
@@ -787,6 +790,11 @@ public class pCreate extends javax.swing.JPanel {
     private javax.swing.JTable tExecutor;
     private javax.swing.JTable tSpeciality;
     private javax.swing.JTable tTask;
+    private javax.swing.JEditorPane textHelpExecs;
+    private javax.swing.JEditorPane textHelpSpec;
+    private javax.swing.JEditorPane textHelpTaskToExec;
+    private javax.swing.JEditorPane textHelpTasks;
+    private javax.swing.JEditorPane textHelpTree;
     private javax.swing.JTree treeExecutors;
     // End of variables declaration//GEN-END:variables
 
@@ -822,7 +830,6 @@ public class pCreate extends javax.swing.JPanel {
         return bNext;
     }
 
-    
 
     public JButton getbPrevious() {
         return bPrevious;
@@ -920,11 +927,12 @@ public class pCreate extends javax.swing.JPanel {
     public JButton getbRight() {
         return bRight;
     }
-     public JButton getbMake() {
+
+    public JButton getbMake() {
         return bMake;
     }
 
-     public JButton getbGenerateTask() {
+    public JButton getbGenerateTask() {
         return bGenerateTask;
     }
 
@@ -963,10 +971,10 @@ public class pCreate extends javax.swing.JPanel {
     public JPanel getpStep5() {
         return pStep5;
     }
-        public JPanel getpStep6() {
+
+    public JPanel getpStep6() {
         return pStep6;
     }
 
 
-    
 }
