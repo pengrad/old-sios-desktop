@@ -47,7 +47,6 @@ public class pCreate extends javax.swing.JPanel {
     }
 
 
-
     /**
      * This method is called from within the constructor to
      * initialize the form.
@@ -692,6 +691,25 @@ public class pCreate extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_bRemoveTaskActionPerformed
 
+    public JEditorPane getTextHelpExecs() {
+        return textHelpExecs;
+    }
+
+    public JEditorPane getTextHelpSpec() {
+        return textHelpSpec;
+    }
+
+    public JEditorPane getTextHelpTaskToExec() {
+        return textHelpTaskToExec;
+    }
+
+    public JEditorPane getTextHelpTasks() {
+        return textHelpTasks;
+    }
+
+    public JEditorPane getTextHelpTree() {
+        return textHelpTree;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddExecutor;

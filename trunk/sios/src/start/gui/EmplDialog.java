@@ -60,6 +60,8 @@ public class EmplDialog extends javax.swing.JDialog {
         this.manager = manager;
         initComponents();
         initModels(parent, manager.getSpecManager(), manager.getTaskManager(), manager.getEmplManager());
+        textHelpExecs.setContentType("text/html");
+        textHelpExecs.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -588,6 +590,9 @@ public class EmplDialog extends javax.swing.JDialog {
         }
     }
 
+    public JEditorPane getTextHelpPane() {
+        return textHelpExecs;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAddSpec;

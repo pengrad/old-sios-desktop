@@ -36,6 +36,8 @@ public class SpecDialog extends javax.swing.JDialog {
         initComponents();
         initList();
         if (!helpText) pRoot.remove(pHelpText);
+        textHelpSpec.setContentType("text/html");
+        textHelpSpec.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -334,6 +336,10 @@ public class SpecDialog extends javax.swing.JDialog {
             list.add((SpecQualify) modelSQ.getElementAt(i));
         }
         return list;
+    }
+
+    public JEditorPane getTextHelpPane() {
+        return textHelpSpec;
     }
 
     public static void main(String args[]) {
