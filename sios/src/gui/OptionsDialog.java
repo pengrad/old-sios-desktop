@@ -8,7 +8,6 @@ package gui;
 
 import model.viewmodel.SpinnerEditor;
 import model.viewmodel.SpinnerMinutesModel;
-import model.manager.OptionsManager;
 
 import javax.swing.*;
 import java.util.Collection;
@@ -51,11 +50,11 @@ public class OptionsDialog extends javax.swing.JDialog {
         spinnerMaxTime = new javax.swing.JSpinner();
         jLabel2 = new javax.swing.JLabel();
         spinnerManageTime = new javax.swing.JSpinner();
-        listManagerTemplates = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Настройки");
+        setTitle("Настройки времени");
 
         jPanel15.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 5));
 
@@ -84,14 +83,14 @@ public class OptionsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
         jPanel1.add(jLabel1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.ipadx = 30;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 5, 0);
         jPanel1.add(spinnerMaxTime, gridBagConstraints);
 
         jLabel2.setText("Нагрузка по управленческой задаче:");
@@ -99,38 +98,22 @@ public class OptionsDialog extends javax.swing.JDialog {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel1.add(jLabel2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.ipadx = 30;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
         jPanel1.add(spinnerManageTime, gridBagConstraints);
 
-        listManagerTemplates.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Управляющий обладает максимальными навыками", "Управляющий обладает минимальными навыками", "Управляющий не связан с исполнительными специализациями" }));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 10);
-        jPanel1.add(listManagerTemplates, gridBagConstraints);
-
-        jLabel3.setText("Исполнительные квалификации управляющего элемента:");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 0);
-        jPanel1.add(jLabel3, gridBagConstraints);
-
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.EAST);
+        getContentPane().add(jPanel3, java.awt.BorderLayout.WEST);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-376)/2, (screenSize.height-204)/2, 376, 204);
+        setBounds((screenSize.width-322)/2, (screenSize.height-148)/2, 322, 148);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSaveActionPerformed
@@ -148,19 +131,14 @@ public class OptionsDialog extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_bCancelActionPerformed
 
-    public int showDialog(Collection<String> specTemplates,OptionsManager options) {
+    public int showDialog(int maxExecTime, int manageTime) {
         setLocationRelativeTo(getParent());
-        modelManageTime.setMaxTime(options.getMaxTime());
-        modelMaxTime.setMaxTime(options.getMaxTime() + 100*60);
-        spinnerManageTime.setValue(options.getManageTaskTime());
+        modelManageTime.setMaxTime(maxExecTime);
+        modelMaxTime.setMaxTime(maxExecTime + 100*60);
+        spinnerManageTime.setValue(manageTime);
         spinnerManageTime.getEditor().updateUI();
-        spinnerMaxTime.setValue(options.getMaxTime());
+        spinnerMaxTime.setValue(maxExecTime);
         spinnerMaxTime.getEditor().updateUI();
-        listManagerTemplates.removeAllItems();
-        for(String template : specTemplates) {
-            listManagerTemplates.addItem(template);
-        }
-        listManagerTemplates.setSelectedItem(options.getTemplateManager());
         result = CANCEL;
         setVisible(true);
         return result;
@@ -172,11 +150,6 @@ public class OptionsDialog extends javax.swing.JDialog {
 
     public int getManageTime() {
         return modelManageTime.getMinutes();
-    }
-
-    public String getSpecTemplate() {
-        Object o = listManagerTemplates.getSelectedItem();
-        return o == null ? null : o.toString();
     }
 
     public static void main(String args[]) {
@@ -198,10 +171,10 @@ public class OptionsDialog extends javax.swing.JDialog {
     private javax.swing.JButton bSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JComboBox listManagerTemplates;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSpinner spinnerManageTime;
     private javax.swing.JSpinner spinnerMaxTime;
     // End of variables declaration//GEN-END:variables

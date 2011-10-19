@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="JTatto" level="application" />
+    <orderEntry type="library" name="JTatoo" level="application" />
   </component>
 </module>
 
