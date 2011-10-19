@@ -21,6 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
     GUIManager manager;
     JFileChooser dialogFile;
     private OptionsDialog dialogOptions;
+    private OptionsTemplateDialog dialogOptionsTemplate;
 
     public MainFrame(GUIManager manager) {
         this.manager = manager;
@@ -28,6 +29,7 @@ public class MainFrame extends javax.swing.JFrame {
         dialogFile.setFileFilter(new SIOSFileFilter());
         dialogFile.setFileView(new SIOSFileView());
         dialogOptions = new OptionsDialog(this, true);
+        dialogOptionsTemplate = new OptionsTemplateDialog(this, true);
         initComponents();
     }
 
@@ -44,10 +46,14 @@ public class MainFrame extends javax.swing.JFrame {
         pCont = new javax.swing.JPanel();
         panelDownStatus = new javax.swing.JPanel();
         labelStatus = new javax.swing.JLabel();
+        panelToolbar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuNew = new javax.swing.JMenuItem();
-        menuOptions = new javax.swing.JMenuItem();
+        menuOptionsTime = new javax.swing.JMenuItem();
+        menuOptionsTemplates = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu2 = new javax.swing.JMenu();
         rBuiler = new javax.swing.JRadioButtonMenuItem();
@@ -76,6 +82,16 @@ public class MainFrame extends javax.swing.JFrame {
 
         getContentPane().add(panelDownStatus, java.awt.BorderLayout.SOUTH);
 
+        panelToolbar.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel1.setText("Режим:");
+        panelToolbar.add(jLabel1);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        panelToolbar.add(jComboBox1);
+
+        getContentPane().add(panelToolbar, java.awt.BorderLayout.NORTH);
+
         jMenu1.setText("Файл");
 
         menuNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -85,9 +101,13 @@ public class MainFrame extends javax.swing.JFrame {
         menuNew.addActionListener(formListener);
         jMenu1.add(menuNew);
 
-        menuOptions.setText("Настройки");
-        menuOptions.addActionListener(formListener);
-        jMenu1.add(menuOptions);
+        menuOptionsTime.setText("Настройки времени");
+        menuOptionsTime.addActionListener(formListener);
+        jMenu1.add(menuOptionsTime);
+
+        menuOptionsTemplates.setText("Настройки шаблонов");
+        menuOptionsTemplates.addActionListener(formListener);
+        jMenu1.add(menuOptionsTemplates);
         jMenu1.add(jSeparator1);
 
         jMenu2.setBorder(null);
@@ -144,30 +164,29 @@ public class MainFrame extends javax.swing.JFrame {
         setJMenuBar(menuBar);
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-800)/2, (screenSize.height-600)/2, 800, 600);
+        setBounds((screenSize.width - 679) / 2, (screenSize.height - 502) / 2, 679, 502);
     }
 
     // Code for dispatching events from components to event handlers.
 
     private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener {
-        FormListener() {}
+        FormListener() {
+        }
+
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == menuNew) {
                 MainFrame.this.menuNewActionPerformed(evt);
-            }
-            else if (evt.getSource() == menuOptions) {
-                MainFrame.this.menuOptionsActionPerformed(evt);
-            }
-            else if (evt.getSource() == menuSave) {
+            } else if (evt.getSource() == menuOptionsTime) {
+                MainFrame.this.menuOptionsTimeActionPerformed(evt);
+            } else if (evt.getSource() == menuOptionsTemplates) {
+                MainFrame.this.menuOptionsTemplatesActionPerformed(evt);
+            } else if (evt.getSource() == menuSave) {
                 MainFrame.this.menuSaveActionPerformed(evt);
-            }
-            else if (evt.getSource() == menuLoad) {
+            } else if (evt.getSource() == menuLoad) {
                 MainFrame.this.menuLoadActionPerformed(evt);
-            }
-            else if (evt.getSource() == menuLoadTasks) {
+            } else if (evt.getSource() == menuLoadTasks) {
                 MainFrame.this.menuLoadTasksActionPerformed(evt);
-            }
-            else if (evt.getSource() == menuExit) {
+            } else if (evt.getSource() == menuExit) {
                 MainFrame.this.menuExitActionPerformed(evt);
             }
         }
@@ -175,14 +194,11 @@ public class MainFrame extends javax.swing.JFrame {
         public void itemStateChanged(java.awt.event.ItemEvent evt) {
             if (evt.getSource() == rBuiler) {
                 MainFrame.this.rBuilerItemStateChanged(evt);
-            }
-            else if (evt.getSource() == rSynthes) {
+            } else if (evt.getSource() == rSynthes) {
                 MainFrame.this.rSynthesItemStateChanged(evt);
-            }
-            else if (evt.getSource() == rProgress) {
+            } else if (evt.getSource() == rProgress) {
                 MainFrame.this.rProgressItemStateChanged(evt);
-            }
-            else if (evt.getSource() == rAnalys) {
+            } else if (evt.getSource() == rAnalys) {
                 MainFrame.this.rAnalysItemStateChanged(evt);
             }
         }
@@ -193,12 +209,11 @@ public class MainFrame extends javax.swing.JFrame {
         manager.newModel();
     }//GEN-LAST:event_menuNewActionPerformed
 
-    private void menuOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOptionsActionPerformed
-        if (dialogOptions.showDialog(manager.getTemplatesNames(), manager.getOptionsManager()) == OptionsDialog.OK) {
+    private void menuOptionsTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOptionsTimeActionPerformed
+        if (dialogOptions.showDialog(manager.getOptionsManager().getMaxTime(), manager.getOptionsManager().getManageTaskTime()) == OptionsDialog.OK) {
             manager.changeTimeOptions(dialogOptions.getMaxTime(), dialogOptions.getManageTime());
-            manager.changeSpecTemplate(dialogOptions.getSpecTemplate());
         }
-    }//GEN-LAST:event_menuOptionsActionPerformed
+    }//GEN-LAST:event_menuOptionsTimeActionPerformed
 
     private void menuSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSaveActionPerformed
         if (dialogFile.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -283,7 +298,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_rSynthesItemStateChanged
 
     private void rAnalysItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rAnalysItemStateChanged
-          if (evt.getStateChange() == evt.SELECTED) {
+        if (evt.getStateChange() == evt.SELECTED) {
             pCont.removeAll();
             setTitle("СИОС-Анализ");
             pCont.add(manager.getAnalys());
@@ -291,6 +306,20 @@ public class MainFrame extends javax.swing.JFrame {
             pCont.repaint();
         }
     }//GEN-LAST:event_rAnalysItemStateChanged
+
+    private void menuOptionsTemplatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOptionsTemplatesActionPerformed
+        if (dialogOptionsTemplate.showDialog(manager.getTemplatesNames(), manager.getOptionsManager().getTemplateManager()) == OptionsDialog.OK) {
+            manager.changeSpecTemplate(dialogOptionsTemplate.getSpecTemplate());
+        }
+    }//GEN-LAST:event_menuOptionsTemplatesActionPerformed
+
+    public void setContentMode(JComponent contentPane, String title) {
+        pCont.removeAll();
+        setTitle(title);
+        pCont.add(contentPane);
+        pCont.revalidate();
+        pCont.repaint();
+    }
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -303,6 +332,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.ButtonGroup buttonGroup1;
+    protected javax.swing.JComboBox jComboBox1;
+    protected javax.swing.JLabel jLabel1;
     protected javax.swing.JMenu jMenu1;
     protected javax.swing.JMenu jMenu2;
     protected javax.swing.JPopupMenu.Separator jSeparator1;
@@ -313,10 +344,12 @@ public class MainFrame extends javax.swing.JFrame {
     protected javax.swing.JMenuItem menuLoad;
     protected javax.swing.JMenuItem menuLoadTasks;
     protected javax.swing.JMenuItem menuNew;
-    protected javax.swing.JMenuItem menuOptions;
+    protected javax.swing.JMenuItem menuOptionsTemplates;
+    protected javax.swing.JMenuItem menuOptionsTime;
     protected javax.swing.JMenuItem menuSave;
     public javax.swing.JPanel pCont;
     protected javax.swing.JPanel panelDownStatus;
+    protected javax.swing.JPanel panelToolbar;
     protected javax.swing.JRadioButtonMenuItem rAnalys;
     protected javax.swing.JRadioButtonMenuItem rBuiler;
     protected javax.swing.JRadioButtonMenuItem rProgress;
