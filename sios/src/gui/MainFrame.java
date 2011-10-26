@@ -7,11 +7,21 @@
 package gui;
 
 import manager.GUIManager;
+import model.manager.ModeManager;
 import model.util.SIOSFileFilter;
 import model.util.SIOSFileView;
 
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * @author Стас
@@ -23,6 +33,8 @@ public class MainFrame extends javax.swing.JFrame {
     private OptionsDialog dialogOptions;
     private OptionsTemplateDialog dialogOptionsTemplate;
 
+    private HashMap<Integer, JRadioButtonMenuItem> modeButtons;
+
     public MainFrame(GUIManager manager) {
         this.manager = manager;
         dialogFile = new JFileChooser();
@@ -31,11 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
         dialogOptions = new OptionsDialog(this, true);
         dialogOptionsTemplate = new OptionsTemplateDialog(this, true);
         initComponents();
-    }
-
-
-    public void initPanels(JPanel taskPanel, JPanel emplPanel, JPanel treePanel, JPanel specPanel) {
-
+        initModels(manager.getModes());
     }
 
     @SuppressWarnings("unchecked")
@@ -166,8 +174,6 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         setBounds((screenSize.width - 679) / 2, (screenSize.height - 502) / 2, 679, 502);
     }
-
-    // Code for dispatching events from components to event handlers.
 
     private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener {
         FormListener() {
@@ -312,6 +318,42 @@ public class MainFrame extends javax.swing.JFrame {
             manager.changeSpecTemplate(dialogOptionsTemplate.getSpecTemplate());
         }
     }//GEN-LAST:event_menuOptionsTemplatesActionPerformed
+
+    public void initModels(ModeManager.Mode[] modes) {
+        jMenu2.removeAll();
+        modeButtons = new HashMap<Integer, JRadioButtonMenuItem>(modes.length);
+        jComboBox1.removeAllItems();
+        for (final ModeManager.Mode mode : modes) {
+            JRadioButtonMenuItem b = new JRadioButtonMenuItem(new AbstractAction(mode.getName()) {
+                public void actionPerformed(ActionEvent e) {
+                    manager.setMode(mode);
+                }
+            });
+            modeButtons.put(mode.getId(), b);
+            buttonGroup1.add(b);
+            jMenu2.add(b);
+            b.setSelected(true);
+            jComboBox1.addItem(mode);
+        }
+        final ItemListener cbModeListener = new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    manager.setMode((ModeManager.Mode) e.getItem());
+                }
+            }
+        };
+        jComboBox1.addItemListener(cbModeListener);
+        manager.addModeObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                ModeManager.Mode m = (ModeManager.Mode) arg;
+                jComboBox1.removeItemListener(cbModeListener);
+                jComboBox1.setSelectedItem(m);
+                jComboBox1.addItemListener(cbModeListener);
+                modeButtons.get(m.getId()).setSelected(true);
+                setContentMode(manager.getPaneByMode(m), "СИОС - " + m.getName());
+            }
+        });
+    }
 
     public void setContentMode(JComponent contentPane, String title) {
         pCont.removeAll();

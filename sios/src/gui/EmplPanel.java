@@ -14,10 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.EventListener;
 
 /**
  * @author parshin
@@ -63,7 +60,7 @@ public class EmplPanel extends javax.swing.JPanel {
                 }
             });
         Helper.setLabelToSplitPane(jSplitPane1, "Новые исполнители");
-        tableEmpls.setDefaultRenderer(Object.class, new TaskRenderer());
+        tableEmpls.setDefaultRenderer(Object.class, new EmplRenderer());
         this.remove(jSplitPane1);
         this.remove(jScrollPane1);
         // Обновление
@@ -242,11 +239,11 @@ public class EmplPanel extends javax.swing.JPanel {
         } else return null;
     }
 
-    class TaskRenderer extends DefaultTableCellRenderer {
+    class EmplRenderer extends DefaultTableCellRenderer {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
                                                        int row, int column) {
             setText(value.toString());
-            if (Controller.get().getMode() == Controller.MODE_ANALYS) {
+            if (Controller.get().isAnalys()) {
                 if (column == 5 && !AnalysManager.isMakeTaskExecutor(model.getExecutorAtRow(row))) {
                     setFont(new Font("Arial", Font.BOLD, 12));
                     setForeground(Color.BLUE);

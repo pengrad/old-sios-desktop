@@ -1,5 +1,6 @@
 package model.manager;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import model.model.*;
 import model.util.Helper;
 
@@ -13,10 +14,6 @@ import java.util.Collection;
  */
 
 public class Controller {
-    public final static int MODE_BUILDER = 0;
-    public final static int MODE_PROGRESS = 1;
-    public final static int MODE_SYNTHES = 2;
-    public final static int MODE_ANALYS = 3;
 
     private static Controller instance;
 
@@ -36,9 +33,10 @@ public class Controller {
     private SerializableManager serializableManager;
     private OptionsManager optionsManager;
     private SpecTemplateManager specTemplateManager;
-    private int mode;
+    private ModeManager modeManager;
 
     public void init() {
+        modeManager = new ModeManager();
         optionsManager = new OptionsManager();
         taskManager = new TaskManager();
         emplManager = new EmployeeManager();
@@ -46,14 +44,6 @@ public class Controller {
         serializableManager = new SerializableManager();
         specTemplateManager = new SpecTemplateManager().init();
 //        testSynthes();
-    }
-
-    public int getMode() {
-        return mode;
-    }
-
-    public void setMode(int mode) {
-        this.mode = mode;
     }
 
     private void test() {
@@ -158,6 +148,10 @@ public class Controller {
         return specTemplateManager;
     }
 
+    public ModeManager getModeManager() {
+        return modeManager;
+    }
+
     public void addTask(Task task) {
         taskManager.addTask(task);
     }
@@ -240,7 +234,7 @@ public class Controller {
         if (!emplManager.isFreeExecutor(executor)) throw new Exception("Исполнитель \"" + executor + "\" занят!");
         ManageTask task = new ManageTask(optionsManager.getManageTaskTime(), specManager.getManageQualify(), executor);
         int futureTime = manager.getSumTime() + task.getTimeInMinutes();
-        if ((mode!=MODE_BUILDER&&mode!=MODE_ANALYS)&&futureTime > optionsManager.getMaxTime())
+        if ((!modeManager.isWrongModelAllow())&&futureTime > optionsManager.getMaxTime())
             throw new Exception("Нагрузка исполнителя \"" + manager + "\" станет равной - "
                     + Helper.getMinutesToString(futureTime) + ", что превысит максимальную норму в "
                     + Helper.getMinutesToString(optionsManager.getMaxTime()));
@@ -296,5 +290,9 @@ public class Controller {
 
     public void removeTaskFromExecutor(Executor executor, Task task) {
         executor.getAllTasks().remove(task);
+    }
+
+    public boolean isAnalys() {
+        return modeManager.isAnalys();
     }
 }
