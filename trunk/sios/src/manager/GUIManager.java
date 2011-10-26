@@ -9,6 +9,7 @@ import model.model.SpecQualify;
 import model.model.Speciality;
 import model.model.Task;
 
+import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import model.tree.ManagerInitTree;
 import gui.MainFrame;
 
 import java.util.Collection;
+import java.util.Observer;
 
 /**
  * User: parshin
@@ -161,7 +163,6 @@ public class GUIManager {
     }
 
     public JTabbedPane getBuilder() {
-        Controller.get().setMode(Controller.MODE_BUILDER);
         tabProgress.remove(ManagerInitTree.getInstance().getTreePanel());
         tabSynthes.remove(ManagerInitTree.getInstance().getTreePanel());
         tabAnalys.remove(ManagerInitTree.getInstance().getTreePanel());
@@ -171,7 +172,6 @@ public class GUIManager {
     }
 
     public JTabbedPane getProgress() {
-        Controller.get().setMode(Controller.MODE_PROGRESS);
         tabBuilder.remove(ManagerInitTree.getInstance().getTreePanel());
         tabSynthes.remove(ManagerInitTree.getInstance().getTreePanel());
         tabAnalys.remove(ManagerInitTree.getInstance().getTreePanel());
@@ -181,7 +181,6 @@ public class GUIManager {
     }
 
     public JTabbedPane getSynthes() {
-        Controller.get().setMode(Controller.MODE_SYNTHES);
         tabBuilder.remove(ManagerInitTree.getInstance().getTreePanel());
         tabProgress.remove(ManagerInitTree.getInstance().getTreePanel());
         tabAnalys.remove(ManagerInitTree.getInstance().getTreePanel());
@@ -191,7 +190,6 @@ public class GUIManager {
     }
 
     public JTabbedPane getAnalys() {
-        Controller.get().setMode(Controller.MODE_ANALYS);
         tabBuilder.remove(ManagerInitTree.getInstance().getTreePanel());
         tabProgress.remove(ManagerInitTree.getInstance().getTreePanel());
         tabSynthes.remove(ManagerInitTree.getInstance().getTreePanel());
@@ -244,5 +242,25 @@ public class GUIManager {
 //            templateManager.updateExecutor(executor);
             Controller.get().addExecutor(executor);
         }
+    }
+
+    public ModeManager.Mode[] getModes() {
+        return ModeManager.Mode.values();
+    }
+
+    public void setMode(ModeManager.Mode mode) {
+        Controller.get().getModeManager().setMode(mode);
+    }
+
+    public void addModeObserver(Observer o) {
+        Controller.get().getModeManager().addObserver(o);
+    }
+
+    public JComponent getPaneByMode(ModeManager.Mode mode) {
+        if(mode.equals(ModeManager.Mode.ANALYS)) return getAnalys();
+        else if(mode.equals(ModeManager.Mode.BUILDER)) return getBuilder();
+        else if(mode.equals(ModeManager.Mode.PROGRESS)) return getProgress();
+        else if(mode.equals(ModeManager.Mode.SYNTHES)) return getSynthes();
+        else return getBuilder();
     }
 }

@@ -9,6 +9,7 @@ import manager.TreeEventManager;
 import manager.GUIManager;
 import model.manager.AbstractTableModelProvider;
 import model.manager.Controller;
+import model.manager.ModeManager;
 import model.manager.SpecTemplateManager;
 import model.model.Executor;
 import model.model.Speciality;
@@ -37,18 +38,7 @@ import java.util.HashMap;
 
 import start.gui.*;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Евгений
- * Date: 13.02.2011
- * Time: 16:24:56
- * To change this template use File | Settings | File Templates.
- */
 public class ControllerStart implements ActionListener, EventTree {
-
-    private int mode;
-    public static final int SYNTHES = 1;
-    public static final int ANALYS = 2;
 
     public static final String HELP_CHOOSE_MODE = ResourceManager.getParam("choose_mode_dialog");
     public static final String HELP_PANEL_SPEC =  ResourceManager.getParam("panel_spec");
@@ -59,7 +49,6 @@ public class ControllerStart implements ActionListener, EventTree {
     public static final String HELP_DIALOG_SPEC = ResourceManager.getParam("dialog_spec");
     public static final String HELP_DIALOG_TASKS = ResourceManager.getParam("dialog_tasks");
     public static final String HELP_DIALOG_EXECS = ResourceManager.getParam("dialog_execs");
-
 
     private FStart fStart;
     //private DStart dStart;
@@ -79,11 +68,13 @@ public class ControllerStart implements ActionListener, EventTree {
     private TaskDialog taskDialog;
     private EmplDialog emplDialog;
     private JFileChooser dialogFile;
-    private DChuseMode chuseMode;
+//    private DChuseMode chuseMode;
     private DInfoSynthes infoSynthes;
 
     private DChooseStartMode dChooseStartMode;
 
+    private int modeSynthes = ModeManager.Mode.SYNTHES.getId();
+    private int modeAnalys = ModeManager.Mode.ANALYS.getId();
 
     public ControllerStart(DataManager manager) {
         try {
@@ -99,7 +90,7 @@ public class ControllerStart implements ActionListener, EventTree {
         pCreate = new pCreate();
         pStart = new pStart();
         this.manager = manager;
-        this.chuseMode = new DChuseMode(fStart, true);
+       // this.chuseMode = new DChuseMode(fStart, true);
         this.infoSynthes = new DInfoSynthes(fStart, true);
         specTableModel = new SpecTableModel(manager.getSpecManager());
         taskTableModel = new TaskTableModel(new AbstractTableModelProvider.TaskProvider());
@@ -128,7 +119,7 @@ public class ControllerStart implements ActionListener, EventTree {
         pCreate.getTreeExecutors().setCellRenderer(new TreeRender());
 
         fStart.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/res/icon2.gif")).getImage());
-        dChooseStartMode = new DChooseStartMode(fStart, true, SYNTHES, ANALYS);
+        dChooseStartMode = new DChooseStartMode(fStart, true, modeSynthes, modeAnalys);
 
         setTextHelp(dChooseStartMode.getTextHelpPane(), HELP_CHOOSE_MODE);
         setTextHelp(emplDialog.getTextHelpPane(), HELP_DIALOG_EXECS);
@@ -229,15 +220,12 @@ public class ControllerStart implements ActionListener, EventTree {
 
     private void startNewProject() {
         int res = dChooseStartMode.showDialog(fStart);
-        switch (res) {
-            case SYNTHES:
-                mode = SYNTHES;
-                createProjectForSynthes();
-                break;
-            case ANALYS:
-                mode = ANALYS;
-                createProjectForBuilder();
-                break;
+        if(res == modeSynthes) {
+            Controller.get().getModeManager().setMode(ModeManager.Mode.SYNTHES);
+            createProjectForSynthes();
+        } else if(res == modeAnalys) {
+            Controller.get().getModeManager().setMode(ModeManager.Mode.ANALYS);
+            createProjectForBuilder();
         }
     }
 
@@ -375,7 +363,7 @@ public class ControllerStart implements ActionListener, EventTree {
             pCreate.getLSteep2().setForeground(colorSelectedSteep);
             pCreate.getLSteep1().setFont(fontUnSelectedSteep);
             pCreate.getLSteep1().setForeground(colorUnSelectedSteep);
-            pCreate.getbNext().setEnabled(mode == ANALYS);
+            pCreate.getbNext().setEnabled(Controller.get().isAnalys());
         } else if (selectedPanel == pCreate.getpCreateTask()) {
             selectedLabelPanel = pCreate.getpStep3();
             fStart.setTitle("Создание исполнителей");
