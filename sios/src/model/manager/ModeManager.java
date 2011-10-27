@@ -44,6 +44,10 @@ public class ModeManager extends AbstractManager {
         fireDataChanged(mode);
     }
 
+    public Mode getMode() {
+        return mode;
+    }
+
     boolean isWrongModelAllow() {
         return mode.equals(Mode.BUILDER) || mode.equals(Mode.ANALYS);
     }

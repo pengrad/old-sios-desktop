@@ -26,27 +26,16 @@ public class Helper {
     }
     
     public static void setLabelToSplitPane(JSplitPane jSplitPane1, String text) {
+        JPanel p = new JPanel();
+        p.add(new JLabel(text));
+        setComponentToSplitPane(jSplitPane1, p);
+    }
 
+    public static void setComponentToSplitPane(JSplitPane jSplitPane1, JComponent component) {
         BasicSplitPaneDivider d = (BasicSplitPaneDivider)jSplitPane1.getComponent(0);
-//        Component l = d.getComponent(0);
-//        Component r = d.getComponent(1);
-//        System.out.println(d.getLayout());
-
-        d.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JPanel toolbar = new JPanel();
-        toolbar.add(new JLabel(text));
-//        toolbar.add(new JButton(new AbstractAction("D") {
-//            public void actionPerformed(ActionEvent e) {
-//                jSplitPane1.setDividerLocation(0);
-//            }
-//        }));
-//        toolbar.add(new JButton(new AbstractAction("U") {
-//            public void actionPerformed(ActionEvent e) {
-//                jSplitPane1.setDividerLocation(1.0d);
-//            }
-//        }));
-        d.add(toolbar);
-        int w = 2*toolbar.getPreferredSize().height - toolbar.getComponent(0).getPreferredSize().height;
+        d.setLayout(new BorderLayout());
+        d.add(component);
+        int w = 2*component.getPreferredSize().height - component.getComponent(0).getPreferredSize().height;
         jSplitPane1.setDividerSize(w);
     }
 }

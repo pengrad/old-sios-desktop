@@ -78,7 +78,7 @@ public class GUIManager {
         tabAnalys.add("Задачи", taskPanel4);
         tabAnalys.add("Исполнители", emplPanel4);
 
-        mainFrame.pCont.add(getBuilder());
+        mainFrame.setMode(Controller.get().getModeManager().getMode());
         return this;
     }
 
