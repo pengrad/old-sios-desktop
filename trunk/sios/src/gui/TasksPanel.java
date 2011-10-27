@@ -44,16 +44,22 @@ public class TasksPanel extends JPanel {
             tableNewTasks.setModel(modelNew);
         }
         if (popupMenu == null) popupMenu = new TaskPopupMenu();
-        Helper.setLabelToSplitPane(jSplitPane1, "Новые задачи");
-        jSplitPane1.setDividerLocation(300);
         pTasks.remove(pButtonsControl);
-        pNewTasks.remove(pButtonsControl);
+        //pNewTasks.remove(pButtonsControl);
         this.remove(jSplitPane1);
         this.remove(pTasks);
         if (isNewPanel) {
             if (!this.isAncestorOf(jSplitPane1)) this.add(jSplitPane1, BorderLayout.CENTER);
+            //pNewTasks.add(pButtonsControl, BorderLayout.NORTH);
+            JPanel root = new JPanel(new BorderLayout());
+            JPanel pText = new JPanel();
+            pText.add(new JLabel("Новые задачи"));
+            root.add(pButtonsControl, BorderLayout.WEST);
+            root.add(pText, BorderLayout.CENTER);
+            pButtonsControl.setCursor(Cursor.getDefaultCursor());
+            Helper.setLabelToSplitPane(jSplitPane1, "Новые задачи");
+            Helper.setComponentToSplitPane(jSplitPane1, root);
             jSplitPane1.setDividerLocation(300);
-            pNewTasks.add(pButtonsControl, BorderLayout.NORTH);
             currentTable = tableNewTasks;
         } else {
             if (!this.isAncestorOf(pTasks)) this.add(pTasks, BorderLayout.CENTER);
@@ -69,15 +75,15 @@ public class TasksPanel extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pButtonsControlAdd = new javax.swing.JPanel();
+        bSynthes = new javax.swing.JButton();
+        bFixTasks = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         pTasks = new javax.swing.JPanel();
         pButtonsControl = new javax.swing.JPanel();
         bAddTask = new javax.swing.JButton();
         bDelTask = new javax.swing.JButton();
         bEditTask = new javax.swing.JButton();
-        pButtonsControlAdd = new javax.swing.JPanel();
-        bSynthes = new javax.swing.JButton();
-        bFixTasks = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tableTasks = new javax.swing.JTable();
         pNewTasks = new javax.swing.JPanel();
@@ -86,13 +92,31 @@ public class TasksPanel extends JPanel {
 
         FormListener formListener = new FormListener();
 
+        pButtonsControlAdd.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 0));
+
+        bSynthes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshSmall.png"))); // NOI18N
+        bSynthes.setToolTipText("Обновить исполнителей");
+        bSynthes.setBorder(null);
+        bSynthes.setBorderPainted(false);
+        bSynthes.setContentAreaFilled(false);
+        bSynthes.setDefaultCapable(false);
+        bSynthes.setFocusable(false);
+        bSynthes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBigPress.png"))); // NOI18N
+        bSynthes.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBig.png"))); // NOI18N
+        bSynthes.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBigPress.png"))); // NOI18N
+        bSynthes.addActionListener(formListener);
+        pButtonsControlAdd.add(bSynthes);
+
+        bFixTasks.setText("Закрепить");
+        bFixTasks.addActionListener(formListener);
+        pButtonsControlAdd.add(bFixTasks);
+
         setLayout(new java.awt.BorderLayout());
 
         jSplitPane1.setDividerLocation(100);
         jSplitPane1.setDividerSize(20);
         jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setName("zxcvzxc"); // NOI18N
-        jSplitPane1.setOneTouchExpandable(true);
 
         pTasks.setLayout(new java.awt.BorderLayout());
 
@@ -136,27 +160,6 @@ public class TasksPanel extends JPanel {
         bEditTask.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/res/editBigPressed.png"))); // NOI18N
         bEditTask.addActionListener(formListener);
         pButtonsControl.add(bEditTask);
-
-        pButtonsControlAdd.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 0));
-
-        bSynthes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshSmall.png"))); // NOI18N
-        bSynthes.setToolTipText("Обновить исполнителей");
-        bSynthes.setBorder(null);
-        bSynthes.setBorderPainted(false);
-        bSynthes.setContentAreaFilled(false);
-        bSynthes.setDefaultCapable(false);
-        bSynthes.setFocusable(false);
-        bSynthes.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBigPress.png"))); // NOI18N
-        bSynthes.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBig.png"))); // NOI18N
-        bSynthes.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBigPress.png"))); // NOI18N
-        bSynthes.addActionListener(formListener);
-        pButtonsControlAdd.add(bSynthes);
-
-        bFixTasks.setText("Закрепить");
-        bFixTasks.addActionListener(formListener);
-        pButtonsControlAdd.add(bFixTasks);
-
-        pButtonsControl.add(pButtonsControlAdd);
 
         pTasks.add(pButtonsControl, java.awt.BorderLayout.NORTH);
 
@@ -240,10 +243,10 @@ public class TasksPanel extends JPanel {
                 TasksPanel.this.bDelTaskActionPerformed(evt);
             } else if (evt.getSource() == bEditTask) {
                 TasksPanel.this.bEditTaskActionPerformed(evt);
-            } else if (evt.getSource() == bSynthes) {
-                TasksPanel.this.bSynthesActionPerformed(evt);
             } else if (evt.getSource() == bFixTasks) {
                 TasksPanel.this.bFixTasksActionPerformed(evt);
+            } else if (evt.getSource() == bSynthes) {
+                TasksPanel.this.bSynthesActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -293,14 +296,14 @@ public class TasksPanel extends JPanel {
         editSelectedTask();
     }//GEN-LAST:event_bEditTaskActionPerformed
 
-    private void bSynthesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSynthesActionPerformed
-        if(isSynthesOnlyNew) manager.updateExecutorsByNewTasks();
-        else manager.synthesExecutorsByTasks();
-    }//GEN-LAST:event_bSynthesActionPerformed
-
     private void bFixTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFixTasksActionPerformed
         manager.fixNewTasks();
     }//GEN-LAST:event_bFixTasksActionPerformed
+
+    private void bSynthesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSynthesActionPerformed
+        if (isSynthesOnlyNew) manager.updateExecutorsByNewTasks();
+        else manager.synthesExecutorsByTasks();
+    }//GEN-LAST:event_bSynthesActionPerformed
 
     public void addTask() {
         Task task = taskDialog.showDialog(null);
@@ -364,7 +367,7 @@ public class TasksPanel extends JPanel {
     private javax.swing.JButton bDelTask;
     private javax.swing.JButton bEditTask;
     private javax.swing.JButton bFixTasks;
-    public javax.swing.JButton bSynthes;
+    private javax.swing.JButton bSynthes;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;

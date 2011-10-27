@@ -34,6 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
     private OptionsTemplateDialog dialogOptionsTemplate;
 
     private HashMap<Integer, JRadioButtonMenuItem> modeButtons;
+    private ItemListener cbModeListener;
 
     public MainFrame(GUIManager manager) {
         this.manager = manager;
@@ -56,18 +57,17 @@ public class MainFrame extends javax.swing.JFrame {
         labelStatus = new javax.swing.JLabel();
         panelToolbar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbModes = new javax.swing.JComboBox();
+        pButtonsControlAdd = new javax.swing.JPanel();
+        bAlgoritm = new javax.swing.JButton();
+        bFix = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuNew = new javax.swing.JMenuItem();
         menuOptionsTime = new javax.swing.JMenuItem();
         menuOptionsTemplates = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenu2 = new javax.swing.JMenu();
-        rBuiler = new javax.swing.JRadioButtonMenuItem();
-        rSynthes = new javax.swing.JRadioButtonMenuItem();
-        rProgress = new javax.swing.JRadioButtonMenuItem();
-        rAnalys = new javax.swing.JRadioButtonMenuItem();
+        menuModes = new javax.swing.JMenu();
         menuSave = new javax.swing.JMenuItem();
         menuLoad = new javax.swing.JMenuItem();
         menuLoadTasks = new javax.swing.JMenuItem();
@@ -95,8 +95,29 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setText("Режим:");
         panelToolbar.add(jLabel1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
-        panelToolbar.add(jComboBox1);
+        cbModes.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Item 1", "Item 2", "Item 3", "Item 4"}));
+        panelToolbar.add(cbModes);
+
+        pButtonsControlAdd.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 30, 0));
+
+        bAlgoritm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshSmall.png"))); // NOI18N
+        bAlgoritm.setToolTipText("Обновить исполнителей");
+        bAlgoritm.setBorder(null);
+        bAlgoritm.setBorderPainted(false);
+        bAlgoritm.setContentAreaFilled(false);
+        bAlgoritm.setDefaultCapable(false);
+        bAlgoritm.setFocusable(false);
+        bAlgoritm.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBigPress.png"))); // NOI18N
+        bAlgoritm.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBig.png"))); // NOI18N
+        bAlgoritm.setRolloverSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/res/refreshBigPress.png"))); // NOI18N
+        bAlgoritm.addActionListener(formListener);
+        pButtonsControlAdd.add(bAlgoritm);
+
+        bFix.setText("Закрепить");
+        bFix.addActionListener(formListener);
+        pButtonsControlAdd.add(bFix);
+
+        panelToolbar.add(pButtonsControlAdd);
 
         getContentPane().add(panelToolbar, java.awt.BorderLayout.NORTH);
 
@@ -118,34 +139,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenu1.add(menuOptionsTemplates);
         jMenu1.add(jSeparator1);
 
-        jMenu2.setBorder(null);
-        jMenu2.setText(" Режим");
-
-        buttonGroup1.add(rBuiler);
-        rBuiler.setSelected(true);
-        rBuiler.setText("Конструктор   ");
-        rBuiler.setMinimumSize(new java.awt.Dimension(170, 0));
-        rBuiler.setPreferredSize(new java.awt.Dimension(171, 24));
-        rBuiler.addItemListener(formListener);
-        jMenu2.add(rBuiler);
-
-        buttonGroup1.add(rSynthes);
-        rSynthes.setText("Синтез");
-        rSynthes.setPreferredSize(new java.awt.Dimension(151, 24));
-        rSynthes.addItemListener(formListener);
-        jMenu2.add(rSynthes);
-
-        buttonGroup1.add(rProgress);
-        rProgress.setText("Развитие");
-        rProgress.addItemListener(formListener);
-        jMenu2.add(rProgress);
-
-        buttonGroup1.add(rAnalys);
-        rAnalys.setText("Анализ");
-        rAnalys.addItemListener(formListener);
-        jMenu2.add(rAnalys);
-
-        jMenu1.add(jMenu2);
+        menuModes.setBorder(null);
+        menuModes.setText(" Режим");
+        jMenu1.add(menuModes);
 
         menuSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         menuSave.setText("Сохранить модель");
@@ -175,7 +171,9 @@ public class MainFrame extends javax.swing.JFrame {
         setBounds((screenSize.width - 679) / 2, (screenSize.height - 502) / 2, 679, 502);
     }
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener {
+    // Code for dispatching events from components to event handlers.
+
+    private class FormListener implements java.awt.event.ActionListener {
         FormListener() {
         }
 
@@ -194,18 +192,10 @@ public class MainFrame extends javax.swing.JFrame {
                 MainFrame.this.menuLoadTasksActionPerformed(evt);
             } else if (evt.getSource() == menuExit) {
                 MainFrame.this.menuExitActionPerformed(evt);
-            }
-        }
-
-        public void itemStateChanged(java.awt.event.ItemEvent evt) {
-            if (evt.getSource() == rBuiler) {
-                MainFrame.this.rBuilerItemStateChanged(evt);
-            } else if (evt.getSource() == rSynthes) {
-                MainFrame.this.rSynthesItemStateChanged(evt);
-            } else if (evt.getSource() == rProgress) {
-                MainFrame.this.rProgressItemStateChanged(evt);
-            } else if (evt.getSource() == rAnalys) {
-                MainFrame.this.rAnalysItemStateChanged(evt);
+            } else if (evt.getSource() == bAlgoritm) {
+                MainFrame.this.bAlgoritmActionPerformed(evt);
+            } else if (evt.getSource() == bFix) {
+                MainFrame.this.bFixActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -273,56 +263,25 @@ public class MainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuLoadTasksActionPerformed
 
-    private void rProgressItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rProgressItemStateChanged
-        if (evt.getStateChange() == evt.SELECTED) {
-            pCont.removeAll();
-            setTitle("СИОС-Развитие");
-            pCont.add(manager.getProgress());
-            pCont.revalidate();
-            pCont.repaint();
-        }
-    }//GEN-LAST:event_rProgressItemStateChanged
-
-    private void rBuilerItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rBuilerItemStateChanged
-        if (evt.getStateChange() == evt.SELECTED) {
-            pCont.removeAll();
-            setTitle("СИОС-Конструктор");
-            pCont.add(manager.getBuilder());
-            pCont.revalidate();
-            pCont.repaint();
-        }
-    }//GEN-LAST:event_rBuilerItemStateChanged
-
-    private void rSynthesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rSynthesItemStateChanged
-        if (evt.getStateChange() == evt.SELECTED) {
-            pCont.removeAll();
-            setTitle("СИОС-Синтез");
-            pCont.add(manager.getSynthes());
-            pCont.revalidate();
-            pCont.repaint();
-        }
-    }//GEN-LAST:event_rSynthesItemStateChanged
-
-    private void rAnalysItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rAnalysItemStateChanged
-        if (evt.getStateChange() == evt.SELECTED) {
-            pCont.removeAll();
-            setTitle("СИОС-Анализ");
-            pCont.add(manager.getAnalys());
-            pCont.revalidate();
-            pCont.repaint();
-        }
-    }//GEN-LAST:event_rAnalysItemStateChanged
-
     private void menuOptionsTemplatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuOptionsTemplatesActionPerformed
         if (dialogOptionsTemplate.showDialog(manager.getTemplatesNames(), manager.getOptionsManager().getTemplateManager()) == OptionsDialog.OK) {
             manager.changeSpecTemplate(dialogOptionsTemplate.getSpecTemplate());
         }
     }//GEN-LAST:event_menuOptionsTemplatesActionPerformed
 
+    private void bAlgoritmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAlgoritmActionPerformed
+//        if(isSynthesOnlyNew) manager.updateExecutorsByNewTasks();
+//        else manager.synthesExecutorsByTasks();
+    }//GEN-LAST:event_bAlgoritmActionPerformed
+
+    private void bFixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFixActionPerformed
+//        manager.fixNewTasks();
+    }//GEN-LAST:event_bFixActionPerformed
+
     public void initModels(ModeManager.Mode[] modes) {
-        jMenu2.removeAll();
+        menuModes.removeAll();
         modeButtons = new HashMap<Integer, JRadioButtonMenuItem>(modes.length);
-        jComboBox1.removeAllItems();
+        cbModes.removeAllItems();
         for (final ModeManager.Mode mode : modes) {
             JRadioButtonMenuItem b = new JRadioButtonMenuItem(new AbstractAction(mode.getName()) {
                 public void actionPerformed(ActionEvent e) {
@@ -331,28 +290,32 @@ public class MainFrame extends javax.swing.JFrame {
             });
             modeButtons.put(mode.getId(), b);
             buttonGroup1.add(b);
-            jMenu2.add(b);
+            menuModes.add(b);
             b.setSelected(true);
-            jComboBox1.addItem(mode);
+            cbModes.addItem(mode);
         }
-        final ItemListener cbModeListener = new ItemListener() {
+        cbModeListener = new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     manager.setMode((ModeManager.Mode) e.getItem());
                 }
             }
         };
-        jComboBox1.addItemListener(cbModeListener);
+        cbModes.addItemListener(cbModeListener);
         manager.addModeObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 ModeManager.Mode m = (ModeManager.Mode) arg;
-                jComboBox1.removeItemListener(cbModeListener);
-                jComboBox1.setSelectedItem(m);
-                jComboBox1.addItemListener(cbModeListener);
-                modeButtons.get(m.getId()).setSelected(true);
-                setContentMode(manager.getPaneByMode(m), "СИОС - " + m.getName());
+                setMode(m);
             }
         });
+    }
+
+    public void setMode(ModeManager.Mode mode) {
+        cbModes.removeItemListener(cbModeListener);
+        cbModes.setSelectedItem(mode);
+        cbModes.addItemListener(cbModeListener);
+        modeButtons.get(mode.getId()).setSelected(true);
+        setContentMode(manager.getPaneByMode(mode), "СИОС - " + mode.getName());
     }
 
     public void setContentMode(JComponent contentPane, String title) {
@@ -373,11 +336,12 @@ public class MainFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton bAlgoritm;
+    protected javax.swing.JButton bFix;
     protected javax.swing.ButtonGroup buttonGroup1;
-    protected javax.swing.JComboBox jComboBox1;
+    protected javax.swing.JComboBox cbModes;
     protected javax.swing.JLabel jLabel1;
     protected javax.swing.JMenu jMenu1;
-    protected javax.swing.JMenu jMenu2;
     protected javax.swing.JPopupMenu.Separator jSeparator1;
     protected javax.swing.JPopupMenu.Separator jSeparator2;
     protected javax.swing.JLabel labelStatus;
@@ -385,17 +349,15 @@ public class MainFrame extends javax.swing.JFrame {
     protected javax.swing.JMenuItem menuExit;
     protected javax.swing.JMenuItem menuLoad;
     protected javax.swing.JMenuItem menuLoadTasks;
+    protected javax.swing.JMenu menuModes;
     protected javax.swing.JMenuItem menuNew;
     protected javax.swing.JMenuItem menuOptionsTemplates;
     protected javax.swing.JMenuItem menuOptionsTime;
     protected javax.swing.JMenuItem menuSave;
+    protected javax.swing.JPanel pButtonsControlAdd;
     public javax.swing.JPanel pCont;
     protected javax.swing.JPanel panelDownStatus;
     protected javax.swing.JPanel panelToolbar;
-    protected javax.swing.JRadioButtonMenuItem rAnalys;
-    protected javax.swing.JRadioButtonMenuItem rBuiler;
-    protected javax.swing.JRadioButtonMenuItem rProgress;
-    protected javax.swing.JRadioButtonMenuItem rSynthes;
     // End of variables declaration//GEN-END:variables
 
 }
