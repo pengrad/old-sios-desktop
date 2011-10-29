@@ -224,7 +224,13 @@ public class GUIManager {
         Controller.get().fireAllData();
     }
 
-    public void synthesExecutorsByTasks() {
+    public void synthesExecutors() {
+        ModeManager.Mode mode = Controller.get().getModeManager().getMode();
+        if(mode.equals(ModeManager.Mode.PROGRESS)) synthesExecutorsByNewTasks();
+        else if(mode.equals(ModeManager.Mode.SYNTHES)) synthesExecutorsByTasks();
+    }
+
+    void synthesExecutorsByTasks() {
         Controller c = Controller.get();
         Collection<Task> tasks = c.getTaskManager().getExecTasks();
         Collection<Executor> executors = synthesManager.createExecutor(tasks);
@@ -235,13 +241,14 @@ public class GUIManager {
         c.setExecutors(executors);
     }
 
-    public void updateExecutorsByNewTasks() {
+    void synthesExecutorsByNewTasks() {
         Collection<Task> newTasks = getTaskManager().getNewExecTasks();
         Collection<Executor> updatedExecutors = new ProgressManager().insertExecutor(newTasks);
         for (Executor executor : updatedExecutors) {
 //            templateManager.updateExecutor(executor);
             Controller.get().addExecutor(executor);
         }
+        Controller.get().fireAllData();
     }
 
     public ModeManager.Mode[] getModes() {

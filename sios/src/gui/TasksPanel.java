@@ -297,12 +297,12 @@ public class TasksPanel extends JPanel {
     }//GEN-LAST:event_bEditTaskActionPerformed
 
     private void bFixTasksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFixTasksActionPerformed
-        manager.fixNewTasks();
+        //manager.fixNewTasks();
     }//GEN-LAST:event_bFixTasksActionPerformed
 
     private void bSynthesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSynthesActionPerformed
-        if (isSynthesOnlyNew) manager.updateExecutorsByNewTasks();
-        else manager.synthesExecutorsByTasks();
+//        if (isSynthesOnlyNew) manager.synthesExecutorsByNewTasks();
+//        else manager.synthesExecutorsByTasks();
     }//GEN-LAST:event_bSynthesActionPerformed
 
     public void addTask() {
