@@ -270,12 +270,12 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_menuOptionsTemplatesActionPerformed
 
     private void bAlgoritmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAlgoritmActionPerformed
-//        if(isSynthesOnlyNew) manager.updateExecutorsByNewTasks();
-//        else manager.synthesExecutorsByTasks();
+//        if(isSynthesOnlyNew) manager.synthesExecutorsByNewTasks();
+        manager.synthesExecutors();
     }//GEN-LAST:event_bAlgoritmActionPerformed
 
     private void bFixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFixActionPerformed
-//        manager.fixNewTasks();
+        manager.fixNewTasks();
     }//GEN-LAST:event_bFixActionPerformed
 
     public void initModels(ModeManager.Mode[] modes) {
